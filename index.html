@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="BABYCLUBCHIC CRM">
-  <title>Nexo CRM</title>
+  <title>BCC CRM</title>
   <link id="favicon" rel="icon">
   <link id="appleIcon" rel="apple-touch-icon">
   <link id="appManifest" rel="manifest">
@@ -1338,7 +1338,7 @@
   <section class="login-screen" id="loginScreen">
     <div class="login-shell">
       <div class="login-brand">
-        <div class="brand"><span class="brand-mark">N</span><span>Nexo CRM</span></div>
+        <div class="brand"><span class="brand-mark">N</span><span>BCC CRM</span></div>
         <div class="login-copy">
           <span class="login-kicker">Ventas en movimiento</span>
           <h1>Tu negocio, en un solo lugar.</h1>
@@ -1380,7 +1380,7 @@
 
   <div class="app-shell" id="appShell" hidden>
     <aside class="sidebar" id="sidebar">
-      <div class="brand"><span class="brand-mark">N</span><span>Nexo CRM</span></div>
+      <div class="brand"><span class="brand-mark">N</span><span>BCC CRM</span></div>
       <p class="sidebar-caption">Espacio de trabajo</p>
       <nav class="nav-list" aria-label="Navegación principal">
         <button class="nav-btn active" data-view="dashboard"><i class="bi bi-grid-1x2"></i><span>Resumen</span></button>
@@ -1393,7 +1393,7 @@
       </nav>
       <div class="sidebar-bottom">
         <div class="install-card">
-          <strong>Instalá Nexo CRM</strong>
+          <strong>Instalá BCC CRM</strong>
           <span>Accedé como una app desde tu celular o computadora.</span>
           <button class="btn btn-sm" id="installButton" type="button"><i class="bi bi-download"></i> Instalar</button>
         </div>
@@ -1467,7 +1467,7 @@
     const state = {
       token: sessionStorage.getItem('nexo_token') || '',
       user: null,
-      settings: { companyName: 'Mi empresa', staleDays: 7 },
+      settings: { companyName: 'BCC', staleDays: 7 },
       contacts: [],
       opportunities: [],
       followUps: [],
@@ -1504,7 +1504,7 @@
     }
     function attr(value) { return esc(value).replace(/`/g, '&#096;'); }
     function initials(value) {
-      return String(value || 'Nexo').trim().split(/\s+/).slice(0, 2).map(part => part[0]).join('').toUpperCase();
+      return String(value || 'BCC').trim().split(/\s+/).slice(0, 2).map(part => part[0]).join('').toUpperCase();
     }
     function toNumber(value) { const number = Number(value); return Number.isFinite(number) ? number : 0; }
     function localDate(value, options = {}) {
@@ -1690,7 +1690,7 @@
       $$('.nav-btn').forEach(button => button.classList.toggle('active', button.dataset.view === state.view));
       $('#followBadge').textContent = pendingFollowUps().length;
       $('#alertDot').hidden = staleOpportunities().length === 0;
-      document.title = `${meta[0]} · Nexo CRM`;
+      document.title = `${meta[0]} · BCC CRM`;
       const views = {
         dashboard: renderDashboard,
         pipeline: renderPipeline,
@@ -2227,7 +2227,7 @@
       win.document.write(`<!doctype html><html lang="es"><head><meta charset="utf-8"><title>${esc(quote.quoteNumber)}</title><style>
         body{font:14px Arial,sans-serif;color:#242231;margin:50px}header{display:flex;justify-content:space-between;border-bottom:3px solid #242231;padding-bottom:24px}h1{margin:0}.logo{font-size:22px;font-weight:800}.meta{text-align:right;color:#666}section{margin-top:35px}table{width:100%;border-collapse:collapse;margin-top:25px}th,td{padding:12px;border-bottom:1px solid #ddd;text-align:left}th{background:#f5f3fa}.num{text-align:right}.total{width:320px;margin:25px 0 0 auto}.total p{display:flex;justify-content:space-between}.grand{font-size:20px;font-weight:bold;border-top:2px solid #242231;padding-top:12px}.print{position:fixed;right:24px;top:24px;padding:10px 16px;border:0;border-radius:8px;background:#c8ff47;font-weight:bold}@media print{.print{display:none}body{margin:0}}</style></head><body>
         <button class="print" onclick="window.print()">Imprimir / Guardar PDF</button>
-        <header><div><div class="logo">Nexo CRM</div><p>${esc(state.settings.companyName || '')}</p></div><div class="meta"><strong>${esc(quote.quoteNumber)}</strong><p>Fecha: ${localDate(quote.createdAt)}</p><p>Válida hasta: ${localDate(quote.validUntil)}</p></div></header>
+        <header><div><div class="logo">BCC CRM</div><p>${esc(state.settings.companyName || '')}</p></div><div class="meta"><strong>${esc(quote.quoteNumber)}</strong><p>Fecha: ${localDate(quote.createdAt)}</p><p>Válida hasta: ${localDate(quote.validUntil)}</p></div></header>
         <section><h2>Cotización para ${esc(contact.name || 'Cliente')}</h2><p>${esc(contact.company || '')}</p><p>${esc(contact.email || '')}</p></section>
         <table><thead><tr><th>Descripción</th><th class="num">Cantidad</th><th class="num">Precio</th><th class="num">Total</th></tr></thead><tbody>${items.map(item => `<tr><td>${esc(item.description)}</td><td class="num">${item.quantity}</td><td class="num">${money(item.price, quote.currency)}</td><td class="num">${money(item.total, quote.currency)}</td></tr>`).join('')}</tbody></table>
         <div class="total"><p><span>Subtotal</span><strong>${money(quote.subtotal, quote.currency)}</strong></p><p><span>Impuestos (${toNumber(quote.taxRate)}%)</span><strong>${money(quote.taxAmount, quote.currency)}</strong></p><p class="grand"><span>Total</span><strong>${money(quote.total, quote.currency)}</strong></p></div>
@@ -2270,7 +2270,7 @@
         const data = formObject(event.currentTarget);
         login(data.email, data.password);
       });
-      el.demoButton.addEventListener('click', () => login('demo@nexo.local', 'demostracion'));
+      el.demoButton.addEventListener('click', () => login('demo@babyclub.local', 'demostracion'));
       $$('.nav-btn').forEach(button => button.addEventListener('click', () => openView(button.dataset.view)));
       $('#logoutButton').addEventListener('click', () => logout(true));
       $('#menuButton').addEventListener('click', openDrawer);
@@ -2318,7 +2318,7 @@
       }
       const ios = /iphone|ipad|ipod/i.test(navigator.userAgent);
       toast(
-        ios ? 'Instalar en iPhone o iPad' : 'Instalar Nexo CRM',
+        ios ? 'Instalar en iPhone o iPad' : 'Instalar BCC CRM',
         ios ? 'En Safari: Compartir → Agregar a inicio.' : 'En el menú del navegador elegí “Instalar aplicación” o “Agregar a pantalla principal”.'
       );
     }
@@ -2361,8 +2361,8 @@
       $('#favicon').href = icon192;
       $('#appleIcon').href = icon192;
       const manifest = {
-        name: 'Nexo CRM',
-        short_name: 'Nexo CRM',
+        name: 'BCC CRM',
+        short_name: 'BCC CRM',
         description: 'CRM privado de ventas y seguimiento',
         start_url: location.href.split('#')[0],
         scope: new URL('.', location.href).href,
