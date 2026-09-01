@@ -3,11 +3,11 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#211f2f">
+  <meta name="theme-color" content="#123c57">
   <meta name="description" content="CRM privado para contactos, oportunidades y seguimientos.">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="BABYCLUBCHIC CRM">
+  <meta name="apple-mobile-web-app-title" content="BCC CRM">
   <title>BCC CRM</title>
   <link id="favicon" rel="icon">
   <link id="appleIcon" rel="apple-touch-icon">
@@ -18,15 +18,15 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
   <style>
     :root {
-      --ink: #211f2f;
-      --ink-2: #343244;
-      --muted: #767486;
-      --line: #e9e7ef;
-      --soft: #f7f5fb;
-      --lavender: #e7ddff;
-      --lavender-2: #f4f0ff;
-      --lime: #c8ff47;
-      --lime-2: #efffc8;
+      --ink: #123c57;
+      --ink-2: #1c4c66;
+      --muted: #587a8c;
+      --line: #d7edf7;
+      --soft: #eef9fd;
+      --lavender: #cdeefc;
+      --lavender-2: #eaf8ff;
+      --lime: #f2b705;
+      --lime-2: #fff3d1;
       --white: #fff;
       --danger: #e35162;
       --danger-soft: #fff0f2;
@@ -34,9 +34,9 @@
       --warning-soft: #fff7e7;
       --success: #37a66b;
       --success-soft: #eaf8f0;
-      --blue: #6374e7;
-      --shadow: 0 18px 55px rgba(36, 28, 67, .10);
-      --shadow-sm: 0 8px 24px rgba(36, 28, 67, .08);
+      --blue: #5fc4f0;
+      --shadow: 0 18px 55px rgba(18, 60, 87, .10);
+      --shadow-sm: 0 8px 24px rgba(18, 60, 87, .08);
       --radius-xl: 26px;
       --radius-lg: 18px;
       --radius-md: 14px;
@@ -51,8 +51,8 @@
       min-height: 100vh;
       color: var(--ink);
       background:
-        radial-gradient(circle at 85% 0, rgba(200, 255, 71, .13), transparent 25rem),
-        linear-gradient(145deg, #ede7ff 0, #f9f7ff 35%, #f1ecff 100%);
+        radial-gradient(circle at 85% 0, rgba(242, 183, 5, .16), transparent 25rem),
+        linear-gradient(145deg, #dff3fd 0, #f7fcff 35%, #e3f5ff 100%);
       font-family: "Manrope", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       -webkit-font-smoothing: antialiased;
       -webkit-tap-highlight-color: transparent;
@@ -78,7 +78,7 @@
       border-radius: 34px;
       overflow: hidden;
       background: rgba(255, 255, 255, .92);
-      box-shadow: 0 28px 80px rgba(47, 34, 83, .18);
+      box-shadow: 0 28px 80px rgba(18, 60, 87, .18);
     }
     .login-brand {
       position: relative;
@@ -88,7 +88,7 @@
       padding: 46px;
       color: white;
       overflow: hidden;
-      background: var(--ink);
+      background: linear-gradient(160deg, #7cd3f7 0%, #4bb8ea 100%);
     }
     .login-brand::before, .login-brand::after {
       content: "";
@@ -101,14 +101,14 @@
       height: 340px;
       right: -130px;
       top: -110px;
-      background: rgba(200, 255, 71, .13);
+      background: rgba(242, 183, 5, .16);
     }
     .login-brand::after {
       width: 260px;
       height: 260px;
       left: -100px;
       bottom: -120px;
-      background: rgba(167, 138, 255, .18);
+      background: rgba(47, 159, 224, .18);
     }
     .brand {
       position: relative;
@@ -126,10 +126,10 @@
       display: grid;
       place-items: center;
       border-radius: 12px 12px 12px 4px;
-      color: var(--ink);
-      background: var(--lime);
+      color: #e0a527;
+      background: #ffffff;
       font-weight: 900;
-      box-shadow: 0 0 0 5px rgba(200, 255, 71, .09);
+      box-shadow: 0 0 0 5px rgba(255, 255, 255, .18);
     }
     .login-copy { position: relative; z-index: 1; max-width: 430px; }
     .login-kicker {
@@ -151,7 +151,7 @@
     }
     .login-copy p {
       margin: 0;
-      color: #c7c5d1;
+      color: rgba(255, 255, 255, .85);
       line-height: 1.7;
     }
     .login-features {
@@ -168,7 +168,7 @@
       padding: 12px 14px;
       border: 1px solid rgba(255,255,255,.08);
       border-radius: 14px;
-      color: #e8e7ed;
+      color: #d7edf7;
       background: rgba(255,255,255,.04);
       font-size: 12px;
       font-weight: 600;
@@ -186,7 +186,7 @@
 
     .field { display: grid; gap: 7px; }
     .field + .field { margin-top: 17px; }
-    .field label { font-size: 12px; font-weight: 800; color: #4c495b; }
+    .field label { font-size: 12px; font-weight: 800; color: #1c4c66; }
     .field small { color: var(--muted); font-size: 11px; }
     .input-wrap { position: relative; }
     .input-wrap > i {
@@ -194,13 +194,13 @@
       left: 14px;
       top: 50%;
       translate: 0 -50%;
-      color: #9b98a8;
+      color: #6f96a8;
     }
     .input-wrap input { padding-left: 42px; }
     input, select, textarea {
       width: 100%;
       min-height: 46px;
-      border: 1px solid #dddbe5;
+      border: 1px solid #d3e9f2;
       border-radius: 12px;
       padding: 11px 13px;
       color: var(--ink);
@@ -210,10 +210,10 @@
     textarea { min-height: 96px; resize: vertical; line-height: 1.5; }
     input:focus, select:focus, textarea:focus {
       outline: 0;
-      border-color: #9b8be1;
-      box-shadow: 0 0 0 4px rgba(155, 139, 225, .13);
+      border-color: #5fc4f0;
+      box-shadow: 0 0 0 4px rgba(95, 196, 240, .18);
     }
-    input::placeholder, textarea::placeholder { color: #aaa7b5; }
+    input::placeholder, textarea::placeholder { color: #7fa3b5; }
     .form-error {
       min-height: 20px;
       margin: 12px 0 0;
@@ -222,7 +222,7 @@
       font-weight: 700;
     }
     .login-actions { display: grid; gap: 11px; margin-top: 8px; }
-    .login-note { margin-top: 20px; color: #9a97a5; font-size: 11px; line-height: 1.55; text-align: center; }
+    .login-note { margin-top: 20px; color: #6f96a8; font-size: 11px; line-height: 1.55; text-align: center; }
 
     .btn {
       min-height: 42px;
@@ -274,7 +274,7 @@
     .sidebar .brand { padding: 0 8px; }
     .sidebar-caption {
       margin: 30px 12px 10px;
-      color: #777586;
+      color: #587a8c;
       font-size: 10px;
       font-weight: 800;
       text-transform: uppercase;
@@ -290,7 +290,7 @@
       border: 0;
       border-radius: 12px;
       padding: 10px 13px;
-      color: #b9b7c3;
+      color: #a8c5d3;
       background: transparent;
       font-size: 12px;
       font-weight: 700;
@@ -357,8 +357,8 @@
     .avatar.lime { background: var(--lime); }
     .user-card strong, .user-card small { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     .user-card strong { color: white; font-size: 11px; }
-    .user-card small { margin-top: 2px; color: #8f8c9b; font-size: 9px; }
-    .logout-btn { border: 0; color: #94919f; background: transparent; padding: 4px; }
+    .user-card small { margin-top: 2px; color: #6f96a8; font-size: 9px; }
+    .logout-btn { border: 0; color: #6f96a8; background: transparent; padding: 4px; }
     .logout-btn:hover { color: white; }
 
     .workspace {
@@ -397,7 +397,7 @@
       top: 50%;
       left: 14px;
       translate: 0 -50%;
-      color: #9f9cab;
+      color: #6f96a8;
       font-size: 13px;
     }
     .global-search input {
@@ -405,7 +405,7 @@
       padding-left: 39px;
       border: 0;
       border-radius: 999px;
-      background: #f5f4f8;
+      background: #eef8fc;
       font-size: 11px;
     }
     .top-icon {
@@ -438,7 +438,7 @@
     }
     .eyebrow {
       margin: 0 0 6px;
-      color: #8c82b9;
+      color: #4a9cc9;
       font-size: 10px;
       font-weight: 800;
       text-transform: uppercase;
@@ -513,7 +513,7 @@
     }
     .panel-head h2 { margin: 0; font-size: 14px; letter-spacing: -.35px; }
     .panel-head p { margin: 3px 0 0; color: var(--muted); font-size: 9px; }
-    .panel-link { border: 0; padding: 3px; color: #736a9c; background: none; font-size: 10px; font-weight: 800; }
+    .panel-link { border: 0; padding: 3px; color: #3d7fa0; background: none; font-size: 10px; font-weight: 800; }
 
     .pipeline-summary {
       display: grid;
@@ -544,7 +544,7 @@
       gap: clamp(9px, 2vw, 24px);
       padding: 14px 8px 0;
       border-bottom: 1px solid var(--line);
-      background: repeating-linear-gradient(to bottom, transparent 0 45px, #f0eef4 46px);
+      background: repeating-linear-gradient(to bottom, transparent 0 45px, #e3f3fb 46px);
     }
     .bar-wrap {
       height: 100%;
@@ -554,7 +554,7 @@
       align-items: center;
       gap: 8px;
     }
-    .bar-value { min-height: 13px; color: #6d6979; font-size: 8px; font-weight: 700; }
+    .bar-value { min-height: 13px; color: #4a6c7e; font-size: 8px; font-weight: 700; }
     .bar {
       width: min(38px, 70%);
       min-height: 4px;
@@ -615,7 +615,7 @@
       width: fit-content;
       border-radius: 999px;
       padding: 5px 8px;
-      color: #625d71;
+      color: #3d5b70;
       background: var(--soft);
       font-size: 8px;
       font-weight: 800;
@@ -641,10 +641,10 @@
       border: 1px solid var(--line);
       border-radius: 17px;
       padding: 11px;
-      background: #f8f7fa;
+      background: #f2f9fd;
       scroll-snap-align: start;
     }
-    .kanban-column.drag-over { border-color: #a68be7; background: #f2edff; }
+    .kanban-column.drag-over { border-color: #5fc4f0; background: #eaf8ff; }
     .kanban-head {
       display: flex;
       justify-content: space-between;
@@ -673,20 +673,20 @@
       box-shadow: 0 4px 14px rgba(39,32,61,.05);
       transition: transform .18s, border-color .18s, box-shadow .18s;
     }
-    .deal-card:hover { transform: translateY(-2px); border-color: #ded8ef; box-shadow: var(--shadow-sm); }
+    .deal-card:hover { transform: translateY(-2px); border-color: #cfe8f4; box-shadow: var(--shadow-sm); }
     .deal-card.dragging { opacity: .5; rotate: 1deg; }
     .deal-card-top { display: flex; justify-content: space-between; gap: 9px; }
     .deal-card h3 { margin: 0; font-size: 11px; line-height: 1.4; }
     .deal-menu {
       border: 0;
-      color: #aaa7b4;
+      color: #7fa3b5;
       background: none;
       padding: 0 2px;
     }
     .deal-company { margin: 5px 0 11px; color: var(--muted); font-size: 8px; }
     .deal-value { margin-bottom: 11px; font-size: 15px; font-weight: 800; letter-spacing: -.5px; }
-    .deal-meta { display: flex; align-items: center; justify-content: space-between; gap: 6px; padding-top: 10px; border-top: 1px solid #f0eef3; }
-    .deal-owner { display: flex; align-items: center; gap: 5px; color: #777381; font-size: 8px; }
+    .deal-meta { display: flex; align-items: center; justify-content: space-between; gap: 6px; padding-top: 10px; border-top: 1px solid #e3f3fb; }
+    .deal-owner { display: flex; align-items: center; gap: 5px; color: #5b7f90; font-size: 8px; }
     .mini-avatar {
       width: 21px;
       height: 21px;
@@ -712,9 +712,9 @@
       display: grid;
       place-items: center;
       min-height: 110px;
-      border: 1px dashed #d8d5df;
+      border: 1px dashed #c7e2ee;
       border-radius: 13px;
-      color: #a19eaa;
+      color: #6f96a8;
       font-size: 9px;
       text-align: center;
     }
@@ -727,7 +727,7 @@
       flex-wrap: wrap;
     }
     .toolbar-search { position: relative; flex: 1; min-width: 210px; }
-    .toolbar-search i { position: absolute; left: 13px; top: 50%; translate: 0 -50%; color: #9c99a7; }
+    .toolbar-search i { position: absolute; left: 13px; top: 50%; translate: 0 -50%; color: #6f96a8; }
     .toolbar-search input { min-height: 40px; padding-left: 38px; background: white; }
     .toolbar select { width: auto; min-width: 150px; min-height: 40px; padding-block: 8px; font-size: 10px; }
 
@@ -741,8 +741,8 @@
     table { width: 100%; border-collapse: collapse; }
     th {
       padding: 12px 16px;
-      color: #8e8a9a;
-      background: #faf9fb;
+      color: #61879a;
+      background: #f6fbfe;
       font-size: 9px;
       font-weight: 800;
       text-align: left;
@@ -750,9 +750,9 @@
       letter-spacing: .06em;
       white-space: nowrap;
     }
-    td { padding: 13px 16px; border-top: 1px solid #f0eef3; font-size: 10px; vertical-align: middle; }
+    td { padding: 13px 16px; border-top: 1px solid #e3f3fb; font-size: 10px; vertical-align: middle; }
     tbody tr { transition: background .15s; }
-    tbody tr:hover { background: #fcfbff; }
+    tbody tr:hover { background: #f5fbfe; }
     .person { display: flex; align-items: center; gap: 10px; min-width: 180px; }
     .person strong, .person span { display: block; }
     .person strong { font-size: 10px; }
@@ -764,7 +764,7 @@
       height: 30px;
       border: 0;
       border-radius: 9px;
-      color: #777381;
+      color: #5b7f90;
       background: var(--soft);
     }
     .icon-action:hover { color: var(--ink); background: var(--lavender-2); }
@@ -818,7 +818,7 @@
     .round-check {
       width: 28px;
       height: 28px;
-      border: 1px solid #d9d6e0;
+      border: 1px solid #d3e9f2;
       border-radius: 50%;
       color: var(--success);
       background: white;
@@ -863,7 +863,7 @@
     .timeline-head { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 7px; }
     .timeline-head strong { font-size: 10px; }
     .timeline-head time { color: var(--muted); font-size: 8px; white-space: nowrap; }
-    .timeline-body p { margin: 0; color: #555160; font-size: 10px; line-height: 1.6; white-space: pre-line; }
+    .timeline-body p { margin: 0; color: #365468; font-size: 10px; line-height: 1.6; white-space: pre-line; }
     .timeline-meta { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 9px; }
 
     .quote-grid {
@@ -878,7 +878,7 @@
       background: white;
     }
     .quote-top { display: flex; justify-content: space-between; gap: 9px; }
-    .quote-number { color: #817a9f; font-size: 9px; font-weight: 800; }
+    .quote-number { color: #587a96; font-size: 9px; font-weight: 800; }
     .quote-card h3 { margin: 8px 0 4px; font-size: 12px; }
     .quote-card p { margin: 0; color: var(--muted); font-size: 9px; }
     .quote-total { margin: 18px 0 13px; font-size: 22px; font-weight: 800; letter-spacing: -.8px; }
@@ -906,7 +906,7 @@
     .seller-stat span, .seller-stat strong { display: block; }
     .seller-stat span { color: var(--muted); font-size: 8px; }
     .seller-stat strong { margin-top: 4px; font-size: 12px; }
-    .progress { height: 6px; margin-top: 14px; border-radius: 99px; background: #efedf3; overflow: hidden; }
+    .progress { height: 6px; margin-top: 14px; border-radius: 99px; background: #e3f3fb; overflow: hidden; }
     .progress span { display: block; height: 100%; border-radius: inherit; background: var(--lime); }
 
     .empty-state {
@@ -923,7 +923,7 @@
       place-items: center;
       margin: auto;
       border-radius: 18px;
-      color: #756c9e;
+      color: #4f7f96;
       background: var(--lavender-2);
       font-size: 22px;
     }
@@ -987,7 +987,7 @@
       gap: 9px;
       padding: 15px 22px;
       border-top: 1px solid var(--line);
-      background: #fcfbfd;
+      background: #f5fbfe;
     }
     .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
     .form-grid .field + .field { margin-top: 0; }
@@ -1010,7 +1010,7 @@
       background: var(--soft);
     }
     .quote-summary-row { display: flex; justify-content: space-between; gap: 12px; color: var(--muted); font-size: 10px; }
-    .quote-summary-row.total { padding-top: 8px; border-top: 1px solid #dfdce6; color: var(--ink); font-size: 13px; font-weight: 800; }
+    .quote-summary-row.total { padding-top: 8px; border-top: 1px solid #d3e9f2; color: var(--ink); font-size: 13px; font-weight: 800; }
 
     .toast-root {
       position: fixed;
@@ -1038,7 +1038,7 @@
     .toast i { width: 30px; height: 30px; display: grid; place-items: center; border-radius: 9px; color: var(--ink); background: var(--lime); }
     .toast strong, .toast span { display: block; }
     .toast strong { font-size: 10px; }
-    .toast span { margin-top: 2px; color: #bbb9c4; font-size: 8px; }
+    .toast span { margin-top: 2px; color: #a8c5d3; font-size: 8px; }
     .toast.error i { background: #ff9fac; }
 
     .loading-layer {
@@ -1048,7 +1048,7 @@
       display: grid;
       place-items: center;
       color: white;
-      background: rgba(33,31,47,.62);
+      background: rgba(18,60,87,.62);
       backdrop-filter: blur(4px);
     }
     .loader-card { display: grid; place-items: center; gap: 12px; font-size: 11px; font-weight: 700; }
@@ -1198,11 +1198,11 @@
     .kanban, .table-wrap, .pipeline-summary {
       scrollbar-gutter: stable;
       scrollbar-width: thin;
-      scrollbar-color: #b9afd7 transparent;
+      scrollbar-color: #7fc4ea transparent;
     }
     .main, .nav-list, .modal-body, .login-screen {
       scrollbar-width: thin;
-      scrollbar-color: #aaa0c9 transparent;
+      scrollbar-color: #7fa8bd transparent;
     }
     .main::-webkit-scrollbar,
     .nav-list::-webkit-scrollbar,
@@ -1224,7 +1224,7 @@
     .pipeline-summary::-webkit-scrollbar-thumb {
       border: 2px solid transparent;
       border-radius: 999px;
-      background: #aaa0c9;
+      background: #7fa8bd;
       background-clip: padding-box;
     }
     .main::-webkit-scrollbar-track,
@@ -1338,7 +1338,7 @@
   <section class="login-screen" id="loginScreen">
     <div class="login-shell">
       <div class="login-brand">
-        <div class="brand"><span class="brand-mark">N</span><span>BCC CRM</span></div>
+        <div class="brand"><span class="brand-mark">B</span><span>BCC CRM</span></div>
         <div class="login-copy">
           <span class="login-kicker">Ventas en movimiento</span>
           <h1>Tu negocio, en un solo lugar.</h1>
@@ -1358,7 +1358,7 @@
           <label for="loginEmail">Email</label>
           <div class="input-wrap">
             <i class="bi bi-envelope"></i>
-            <input id="loginEmail" name="email" type="email" autocomplete="username" placeholder="vos@tuempresa.com" required>
+            <input id="loginEmail" name="email" type="email" autocomplete="username" placeholder="demo@babyclubchic.com" required>
           </div>
         </div>
         <div class="field">
@@ -1380,7 +1380,7 @@
 
   <div class="app-shell" id="appShell" hidden>
     <aside class="sidebar" id="sidebar">
-      <div class="brand"><span class="brand-mark">N</span><span>BCC CRM</span></div>
+      <div class="brand"><span class="brand-mark">B</span><span>BCC CRM</span></div>
       <p class="sidebar-caption">Espacio de trabajo</p>
       <nav class="nav-list" aria-label="Navegación principal">
         <button class="nav-btn active" data-view="dashboard"><i class="bi bi-grid-1x2"></i><span>Resumen</span></button>
@@ -1432,12 +1432,12 @@
      * Pegá aquí la URL que termina en /exec después de implementar Code.gs
      * como Aplicación web en Google Apps Script.
      */
-    const APPS_SCRIPT_URL = 'https://script.google.com/a/macros/babyclubchic.com/s/AKfycbxYU6qBao1ASdbqJT2mnpqCKmIjE1RilF7FWsfEIct0_xb0j62S4H7nc66CfWo9ZMu6-w/exec';
+    const APPS_SCRIPT_URL = 'PEGA_AQUI_LA_URL_DE_TU_APLICACION_WEB';
 
     const STAGES = ['Nuevo', 'Contactado', 'Propuesta', 'Negociación', 'Ganado'];
     const ALL_STAGES = [...STAGES, 'Perdido'];
     const STAGE_COLORS = {
-      Nuevo: '#b9a7f7',
+      Nuevo: '#7fd4f5',
       Contactado: '#72b7ff',
       Propuesta: '#ffc66f',
       'Negociación': '#ff9c8d',
@@ -1467,7 +1467,7 @@
     const state = {
       token: sessionStorage.getItem('nexo_token') || '',
       user: null,
-      settings: { companyName: 'BCC', staleDays: 7 },
+      settings: { companyName: 'Mi empresa', staleDays: 7 },
       contacts: [],
       opportunities: [],
       followUps: [],
@@ -1717,8 +1717,8 @@
          <button class="btn btn-lime" data-action="new-opportunity"><i class="bi bi-plus-lg"></i> Oportunidad</button>`
       ) + `
       <section class="metric-grid">
-        ${metricCard('Pipeline activo', money(pipelineValue, 'ARS', true), `${open.length} oportunidades abiertas`, 'funnel', '#efeaff')}
-        ${metricCard('Ventas ganadas', money(wonValue, 'ARS', true), `${won.length} negocios cerrados`, 'trophy', '#efffc8')}
+        ${metricCard('Pipeline activo', money(pipelineValue, 'ARS', true), `${open.length} oportunidades abiertas`, 'funnel', '#eaf8ff')}
+        ${metricCard('Ventas ganadas', money(wonValue, 'ARS', true), `${won.length} negocios cerrados`, 'trophy', '#fff3d1')}
         ${metricCard('Seguimientos', pendingFollowUps().length, `${overdue.length} vencidos`, 'calendar2-check', '#e9f5ff')}
         ${metricCard('Alertas', staleOpportunities().length, 'Oportunidades sin actividad', 'exclamation-triangle', '#fff1dd')}
       </section>
@@ -2225,7 +2225,7 @@
       const win = window.open('', '_blank');
       if (!win) { toast('Ventana bloqueada', 'Permití ventanas emergentes para imprimir.', 'error'); return; }
       win.document.write(`<!doctype html><html lang="es"><head><meta charset="utf-8"><title>${esc(quote.quoteNumber)}</title><style>
-        body{font:14px Arial,sans-serif;color:#242231;margin:50px}header{display:flex;justify-content:space-between;border-bottom:3px solid #242231;padding-bottom:24px}h1{margin:0}.logo{font-size:22px;font-weight:800}.meta{text-align:right;color:#666}section{margin-top:35px}table{width:100%;border-collapse:collapse;margin-top:25px}th,td{padding:12px;border-bottom:1px solid #ddd;text-align:left}th{background:#f5f3fa}.num{text-align:right}.total{width:320px;margin:25px 0 0 auto}.total p{display:flex;justify-content:space-between}.grand{font-size:20px;font-weight:bold;border-top:2px solid #242231;padding-top:12px}.print{position:fixed;right:24px;top:24px;padding:10px 16px;border:0;border-radius:8px;background:#c8ff47;font-weight:bold}@media print{.print{display:none}body{margin:0}}</style></head><body>
+        body{font:14px Arial,sans-serif;color:#10334a;margin:50px}header{display:flex;justify-content:space-between;border-bottom:3px solid #10334a;padding-bottom:24px}h1{margin:0}.logo{font-size:22px;font-weight:800}.meta{text-align:right;color:#666}section{margin-top:35px}table{width:100%;border-collapse:collapse;margin-top:25px}th,td{padding:12px;border-bottom:1px solid #ddd;text-align:left}th{background:#eaf5fb}.num{text-align:right}.total{width:320px;margin:25px 0 0 auto}.total p{display:flex;justify-content:space-between}.grand{font-size:20px;font-weight:bold;border-top:2px solid #10334a;padding-top:12px}.print{position:fixed;right:24px;top:24px;padding:10px 16px;border:0;border-radius:8px;background:#f2b705;font-weight:bold}@media print{.print{display:none}body{margin:0}}</style></head><body>
         <button class="print" onclick="window.print()">Imprimir / Guardar PDF</button>
         <header><div><div class="logo">BCC CRM</div><p>${esc(state.settings.companyName || '')}</p></div><div class="meta"><strong>${esc(quote.quoteNumber)}</strong><p>Fecha: ${localDate(quote.createdAt)}</p><p>Válida hasta: ${localDate(quote.validUntil)}</p></div></header>
         <section><h2>Cotización para ${esc(contact.name || 'Cliente')}</h2><p>${esc(contact.company || '')}</p><p>${esc(contact.email || '')}</p></section>
@@ -2270,7 +2270,7 @@
         const data = formObject(event.currentTarget);
         login(data.email, data.password);
       });
-      el.demoButton.addEventListener('click', () => login('demo@babyclub.local', 'demostracion'));
+      el.demoButton.addEventListener('click', () => login('demo@nexo.local', 'demostracion'));
       $$('.nav-btn').forEach(button => button.addEventListener('click', () => openView(button.dataset.view)));
       $('#logoutButton').addEventListener('click', () => logout(true));
       $('#menuButton').addEventListener('click', openDrawer);
@@ -2328,11 +2328,11 @@
         const canvas = document.createElement('canvas');
         canvas.width = canvas.height = size;
         const ctx = canvas.getContext('2d');
-        ctx.fillStyle = '#211f2f';
+        ctx.fillStyle = '#5fc4f0';
         ctx.fillRect(0, 0, size, size);
         const margin = size * .16;
         const radius = size * .20;
-        ctx.fillStyle = '#c8ff47';
+        ctx.fillStyle = '#ffffff';
         const left = margin;
         const top = margin;
         const width = size - margin * 2;
@@ -2349,11 +2349,11 @@
         ctx.quadraticCurveTo(left, top, left + radius, top);
         ctx.closePath();
         ctx.fill();
-        ctx.fillStyle = '#211f2f';
+        ctx.fillStyle = '#e0a527';
         ctx.font = `900 ${size * .47}px Manrope, Arial`;
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
-        ctx.fillText('N', size / 2, size * .52);
+        ctx.fillText('B', size / 2, size * .52);
         return canvas.toDataURL('image/png');
       }
       const icon192 = icon(192);
@@ -2368,8 +2368,8 @@
         scope: new URL('.', location.href).href,
         display: 'standalone',
         orientation: 'any',
-        background_color: '#f4f0ff',
-        theme_color: '#211f2f',
+        background_color: '#eaf8ff',
+        theme_color: '#123c57',
         icons: [
           { src: icon192, sizes: '192x192', type: 'image/png', purpose: 'any maskable' },
           { src: icon512, sizes: '512x512', type: 'image/png', purpose: 'any maskable' }
@@ -2381,7 +2381,7 @@
     function demoSeed() {
       const now = Date.now();
       return {
-        user: { id: 'USR-DEMO', name: 'Taylor Gómez', email: 'demo@babyclubchic.com ', role: 'admin', active: true },
+        user: { id: 'USR-DEMO', name: 'Taylor Gómez', email: 'demo@nexo.local', role: 'admin', active: true },
         settings: { companyName: 'Estudio Norte', staleDays: 7 },
         sellers: [
           { id: 'USR-1', name: 'Taylor Gómez', email: 'taylor@demo.com', role: 'admin', active: true },
@@ -2469,7 +2469,7 @@
       bindGlobalEvents();
       el.demoButton.hidden = !DEMO_MODE;
       if (DEMO_MODE) {
-        $('#loginEmail').value = 'demo@babyclubchic.com ';
+        $('#loginEmail').value = 'demo@nexo.local';
         $('#loginPassword').value = 'demostracion';
       }
       if (state.token && !DEMO_MODE) {
