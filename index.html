@@ -2381,7 +2381,7 @@
     function demoSeed() {
       const now = Date.now();
       return {
-        user: { id: 'USR-DEMO', name: 'Taylor Gómez', email: 'demo@nexo.local', role: 'admin', active: true },
+        user: { id: 'USR-DEMO', name: 'Taylor Gómez', email: 'demo@babyclubchic.com ', role: 'admin', active: true },
         settings: { companyName: 'Estudio Norte', staleDays: 7 },
         sellers: [
           { id: 'USR-1', name: 'Taylor Gómez', email: 'taylor@demo.com', role: 'admin', active: true },
@@ -2469,7 +2469,7 @@
       bindGlobalEvents();
       el.demoButton.hidden = !DEMO_MODE;
       if (DEMO_MODE) {
-        $('#loginEmail').value = 'demo@nexo.local';
+        $('#loginEmail').value = 'demo@babyclubchic.com ';
         $('#loginPassword').value = 'demostracion';
       }
       if (state.token && !DEMO_MODE) {
