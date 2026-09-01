@@ -1,0 +1,2486 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#211f2f">
+  <meta name="description" content="CRM privado para contactos, oportunidades y seguimientos.">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Nexo CRM">
+  <title>Nexo CRM</title>
+  <link id="favicon" rel="icon">
+  <link id="appleIcon" rel="apple-touch-icon">
+  <link id="appManifest" rel="manifest">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #211f2f;
+      --ink-2: #343244;
+      --muted: #767486;
+      --line: #e9e7ef;
+      --soft: #f7f5fb;
+      --lavender: #e7ddff;
+      --lavender-2: #f4f0ff;
+      --lime: #c8ff47;
+      --lime-2: #efffc8;
+      --white: #fff;
+      --danger: #e35162;
+      --danger-soft: #fff0f2;
+      --warning: #f0a128;
+      --warning-soft: #fff7e7;
+      --success: #37a66b;
+      --success-soft: #eaf8f0;
+      --blue: #6374e7;
+      --shadow: 0 18px 55px rgba(36, 28, 67, .10);
+      --shadow-sm: 0 8px 24px rgba(36, 28, 67, .08);
+      --radius-xl: 26px;
+      --radius-lg: 18px;
+      --radius-md: 14px;
+      --sidebar: 244px;
+      --topbar: 80px;
+    }
+
+    * { box-sizing: border-box; }
+    html { min-height: 100%; scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 85% 0, rgba(200, 255, 71, .13), transparent 25rem),
+        linear-gradient(145deg, #ede7ff 0, #f9f7ff 35%, #f1ecff 100%);
+      font-family: "Manrope", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -webkit-tap-highlight-color: transparent;
+    }
+    button, input, select, textarea { font: inherit; }
+    button { cursor: pointer; }
+    a { color: inherit; }
+    [hidden] { display: none !important; }
+    :focus-visible { outline: 3px solid rgba(99, 116, 231, .28); outline-offset: 2px; }
+
+    .login-screen {
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: max(24px, env(safe-area-inset-top)) 24px max(24px, env(safe-area-inset-bottom));
+    }
+    .login-shell {
+      width: min(980px, 100%);
+      min-height: 610px;
+      display: grid;
+      grid-template-columns: 1.05fr .95fr;
+      border: 8px solid rgba(255, 255, 255, .65);
+      border-radius: 34px;
+      overflow: hidden;
+      background: rgba(255, 255, 255, .92);
+      box-shadow: 0 28px 80px rgba(47, 34, 83, .18);
+    }
+    .login-brand {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 46px;
+      color: white;
+      overflow: hidden;
+      background: var(--ink);
+    }
+    .login-brand::before, .login-brand::after {
+      content: "";
+      position: absolute;
+      border-radius: 999px;
+      pointer-events: none;
+    }
+    .login-brand::before {
+      width: 340px;
+      height: 340px;
+      right: -130px;
+      top: -110px;
+      background: rgba(200, 255, 71, .13);
+    }
+    .login-brand::after {
+      width: 260px;
+      height: 260px;
+      left: -100px;
+      bottom: -120px;
+      background: rgba(167, 138, 255, .18);
+    }
+    .brand {
+      position: relative;
+      z-index: 1;
+      display: inline-flex;
+      align-items: center;
+      gap: 11px;
+      font-size: 21px;
+      font-weight: 800;
+      letter-spacing: -.5px;
+    }
+    .brand-mark {
+      width: 38px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      border-radius: 12px 12px 12px 4px;
+      color: var(--ink);
+      background: var(--lime);
+      font-weight: 900;
+      box-shadow: 0 0 0 5px rgba(200, 255, 71, .09);
+    }
+    .login-copy { position: relative; z-index: 1; max-width: 430px; }
+    .login-kicker {
+      display: inline-flex;
+      padding: 7px 11px;
+      border-radius: 999px;
+      color: var(--lime);
+      background: rgba(255,255,255,.08);
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+    }
+    .login-copy h1 {
+      margin: 18px 0 14px;
+      font-size: clamp(34px, 5vw, 53px);
+      line-height: 1.02;
+      letter-spacing: -2.4px;
+    }
+    .login-copy p {
+      margin: 0;
+      color: #c7c5d1;
+      line-height: 1.7;
+    }
+    .login-features {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    .login-feature {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 14px;
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 14px;
+      color: #e8e7ed;
+      background: rgba(255,255,255,.04);
+      font-size: 12px;
+      font-weight: 600;
+    }
+    .login-feature i { color: var(--lime); font-size: 16px; }
+    .login-form-wrap {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 54px;
+      background: rgba(255,255,255,.96);
+    }
+    .login-form-wrap h2 { margin: 0 0 8px; font-size: 30px; letter-spacing: -1.1px; }
+    .login-form-wrap > p { margin: 0 0 30px; color: var(--muted); font-size: 14px; line-height: 1.6; }
+
+    .field { display: grid; gap: 7px; }
+    .field + .field { margin-top: 17px; }
+    .field label { font-size: 12px; font-weight: 800; color: #4c495b; }
+    .field small { color: var(--muted); font-size: 11px; }
+    .input-wrap { position: relative; }
+    .input-wrap > i {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      translate: 0 -50%;
+      color: #9b98a8;
+    }
+    .input-wrap input { padding-left: 42px; }
+    input, select, textarea {
+      width: 100%;
+      min-height: 46px;
+      border: 1px solid #dddbe5;
+      border-radius: 12px;
+      padding: 11px 13px;
+      color: var(--ink);
+      background: white;
+      transition: border-color .2s, box-shadow .2s;
+    }
+    textarea { min-height: 96px; resize: vertical; line-height: 1.5; }
+    input:focus, select:focus, textarea:focus {
+      outline: 0;
+      border-color: #9b8be1;
+      box-shadow: 0 0 0 4px rgba(155, 139, 225, .13);
+    }
+    input::placeholder, textarea::placeholder { color: #aaa7b5; }
+    .form-error {
+      min-height: 20px;
+      margin: 12px 0 0;
+      color: var(--danger);
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .login-actions { display: grid; gap: 11px; margin-top: 8px; }
+    .login-note { margin-top: 20px; color: #9a97a5; font-size: 11px; line-height: 1.55; text-align: center; }
+
+    .btn {
+      min-height: 42px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      border: 0;
+      border-radius: 12px;
+      padding: 10px 16px;
+      color: white;
+      background: var(--ink);
+      font-size: 13px;
+      font-weight: 800;
+      text-decoration: none;
+      transition: transform .18s, box-shadow .18s, opacity .18s;
+    }
+    .btn:hover { transform: translateY(-1px); box-shadow: var(--shadow-sm); }
+    .btn:active { transform: translateY(0); }
+    .btn:disabled { cursor: not-allowed; opacity: .55; transform: none; box-shadow: none; }
+    .btn-lime { color: var(--ink); background: var(--lime); }
+    .btn-white { color: var(--ink); background: white; border: 1px solid var(--line); }
+    .btn-soft { color: var(--ink); background: var(--soft); }
+    .btn-danger { color: var(--danger); background: var(--danger-soft); }
+    .btn-sm { min-height: 34px; padding: 7px 11px; border-radius: 10px; font-size: 11px; }
+    .btn-icon { width: 40px; padding: 0; }
+
+    .app-shell {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: var(--sidebar) minmax(0, 1fr);
+      gap: 12px;
+      padding: 12px;
+    }
+    .sidebar {
+      position: sticky;
+      top: 12px;
+      z-index: 40;
+      height: calc(100vh - 24px);
+      display: flex;
+      flex-direction: column;
+      padding: 24px 16px 16px;
+      border-radius: var(--radius-xl);
+      color: white;
+      background: var(--ink);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    .sidebar .brand { padding: 0 8px; }
+    .sidebar-caption {
+      margin: 30px 12px 10px;
+      color: #777586;
+      font-size: 10px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: .12em;
+    }
+    .nav-list { display: grid; gap: 5px; }
+    .nav-btn {
+      width: 100%;
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border: 0;
+      border-radius: 12px;
+      padding: 10px 13px;
+      color: #b9b7c3;
+      background: transparent;
+      font-size: 12px;
+      font-weight: 700;
+      text-align: left;
+      transition: color .18s, background .18s;
+    }
+    .nav-btn i { width: 18px; font-size: 16px; text-align: center; }
+    .nav-btn:hover { color: white; background: rgba(255,255,255,.055); }
+    .nav-btn.active { color: var(--ink); background: var(--lime); }
+    .nav-badge {
+      min-width: 20px;
+      margin-left: auto;
+      border-radius: 999px;
+      padding: 3px 6px;
+      color: var(--ink);
+      background: #ffc7a4;
+      font-size: 9px;
+      text-align: center;
+    }
+    .nav-btn.active .nav-badge { background: var(--ink); color: var(--lime); }
+    .sidebar-bottom { margin-top: auto; }
+    .install-card {
+      position: relative;
+      margin-bottom: 12px;
+      border-radius: 17px;
+      padding: 15px;
+      color: var(--ink);
+      background: var(--lime);
+      overflow: hidden;
+    }
+    .install-card::after {
+      content: "";
+      position: absolute;
+      width: 60px;
+      height: 60px;
+      right: -15px;
+      bottom: -20px;
+      border: 10px solid rgba(33,31,47,.12);
+      border-radius: 50%;
+    }
+    .install-card strong { display: block; position: relative; z-index: 1; font-size: 12px; }
+    .install-card span { display: block; position: relative; z-index: 1; margin-top: 4px; font-size: 9px; line-height: 1.45; }
+    .install-card button { position: relative; z-index: 1; margin-top: 10px; }
+    .user-card {
+      display: grid;
+      grid-template-columns: 38px 1fr 28px;
+      align-items: center;
+      gap: 9px;
+      padding: 10px 8px 0;
+      border-top: 1px solid rgba(255,255,255,.08);
+    }
+    .avatar {
+      width: 38px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      flex: none;
+      border-radius: 50%;
+      color: var(--ink);
+      background: var(--lavender);
+      font-size: 12px;
+      font-weight: 900;
+    }
+    .avatar.lime { background: var(--lime); }
+    .user-card strong, .user-card small { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .user-card strong { color: white; font-size: 11px; }
+    .user-card small { margin-top: 2px; color: #8f8c9b; font-size: 9px; }
+    .logout-btn { border: 0; color: #94919f; background: transparent; padding: 4px; }
+    .logout-btn:hover { color: white; }
+
+    .workspace {
+      min-width: 0;
+      min-height: calc(100vh - 24px);
+      border-radius: var(--radius-xl);
+      background: rgba(255,255,255,.82);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(20px);
+      overflow: clip;
+    }
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      min-height: var(--topbar);
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      padding: 16px 24px;
+      border-bottom: 1px solid rgba(233,231,239,.75);
+      background: rgba(255,255,255,.84);
+      backdrop-filter: blur(18px);
+    }
+    .mobile-menu { display: none; }
+    .topbar-title { min-width: 180px; }
+    .topbar-title strong { display: block; font-size: 15px; letter-spacing: -.3px; }
+    .topbar-title span { display: block; margin-top: 3px; color: var(--muted); font-size: 10px; }
+    .global-search {
+      position: relative;
+      width: min(380px, 38vw);
+      margin-left: auto;
+    }
+    .global-search i {
+      position: absolute;
+      top: 50%;
+      left: 14px;
+      translate: 0 -50%;
+      color: #9f9cab;
+      font-size: 13px;
+    }
+    .global-search input {
+      min-height: 40px;
+      padding-left: 39px;
+      border: 0;
+      border-radius: 999px;
+      background: #f5f4f8;
+      font-size: 11px;
+    }
+    .top-icon {
+      position: relative;
+      width: 40px;
+      height: 40px;
+      flex: none;
+      border: 1px solid var(--line);
+      border-radius: 50%;
+      color: var(--ink);
+      background: white;
+    }
+    .top-icon .dot {
+      position: absolute;
+      right: 6px;
+      top: 6px;
+      width: 7px;
+      height: 7px;
+      border: 2px solid white;
+      border-radius: 50%;
+      background: var(--danger);
+    }
+    .main { padding: 24px; }
+    .page-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 22px;
+    }
+    .eyebrow {
+      margin: 0 0 6px;
+      color: #8c82b9;
+      font-size: 10px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: .12em;
+    }
+    .page-head h1 { margin: 0; font-size: clamp(24px, 3vw, 32px); letter-spacing: -1.2px; line-height: 1.15; }
+    .page-head p:not(.eyebrow) { margin: 8px 0 0; color: var(--muted); font-size: 12px; line-height: 1.5; }
+    .head-actions { display: flex; align-items: center; gap: 9px; flex-wrap: wrap; }
+
+    .metric-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+    .metric-card {
+      position: relative;
+      min-height: 132px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      padding: 17px;
+      background: white;
+      overflow: hidden;
+    }
+    .metric-card::after {
+      content: "";
+      position: absolute;
+      width: 80px;
+      height: 80px;
+      right: -35px;
+      bottom: -38px;
+      border-radius: 50%;
+      background: var(--metric-accent, var(--lavender-2));
+    }
+    .metric-top { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+    .metric-label { color: var(--muted); font-size: 10px; font-weight: 700; }
+    .metric-icon {
+      width: 32px;
+      height: 32px;
+      display: grid;
+      place-items: center;
+      border-radius: 10px;
+      color: var(--ink);
+      background: var(--metric-accent, var(--lavender-2));
+    }
+    .metric-value { position: relative; z-index: 1; font-size: clamp(22px, 3vw, 29px); font-weight: 800; letter-spacing: -1.2px; }
+    .metric-foot { position: relative; z-index: 1; display: flex; align-items: center; gap: 6px; color: var(--muted); font-size: 9px; }
+    .trend { color: var(--success); font-weight: 800; }
+
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.35fr) minmax(260px, .7fr);
+      gap: 14px;
+    }
+    .stack { display: grid; gap: 14px; align-content: start; }
+    .panel {
+      min-width: 0;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      padding: 18px;
+      background: white;
+    }
+    .panel-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 15px;
+    }
+    .panel-head h2 { margin: 0; font-size: 14px; letter-spacing: -.35px; }
+    .panel-head p { margin: 3px 0 0; color: var(--muted); font-size: 9px; }
+    .panel-link { border: 0; padding: 3px; color: #736a9c; background: none; font-size: 10px; font-weight: 800; }
+
+    .pipeline-summary {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 9px;
+      margin-bottom: 18px;
+    }
+    .pipeline-step {
+      min-width: 0;
+      border-radius: 12px;
+      padding: 11px 9px;
+      background: var(--soft);
+    }
+    .pipeline-step span, .pipeline-step strong { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .pipeline-step span { color: var(--muted); font-size: 8px; }
+    .pipeline-step strong { margin-top: 4px; font-size: 12px; }
+    .pipeline-line {
+      height: 5px;
+      margin-top: 8px;
+      border-radius: 99px;
+      background: var(--step-color, var(--lavender));
+    }
+    .chart {
+      height: 185px;
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      align-items: end;
+      gap: clamp(9px, 2vw, 24px);
+      padding: 14px 8px 0;
+      border-bottom: 1px solid var(--line);
+      background: repeating-linear-gradient(to bottom, transparent 0 45px, #f0eef4 46px);
+    }
+    .bar-wrap {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 8px;
+    }
+    .bar-value { min-height: 13px; color: #6d6979; font-size: 8px; font-weight: 700; }
+    .bar {
+      width: min(38px, 70%);
+      min-height: 4px;
+      border-radius: 9px 9px 2px 2px;
+      background: var(--ink);
+      transition: height .45s ease;
+    }
+    .bar.current { background: var(--lime); box-shadow: 0 0 0 5px rgba(200,255,71,.14); }
+    .bar-label { color: var(--muted); font-size: 8px; }
+
+    .agenda-list, .alert-list, .seller-list, .activity-list { display: grid; gap: 9px; }
+    .agenda-item, .alert-item, .seller-item, .activity-item {
+      display: grid;
+      align-items: center;
+      gap: 10px;
+      border-radius: 13px;
+      padding: 10px;
+      background: var(--soft);
+    }
+    .agenda-item { grid-template-columns: 34px minmax(0, 1fr) auto; }
+    .agenda-time {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border-radius: 10px;
+      color: var(--ink);
+      background: var(--lavender);
+      font-size: 9px;
+      font-weight: 800;
+      text-align: center;
+    }
+    .agenda-item strong, .agenda-item span, .alert-item strong, .alert-item span { display: block; }
+    .agenda-item strong, .alert-item strong { font-size: 10px; }
+    .agenda-item span, .alert-item span { margin-top: 3px; color: var(--muted); font-size: 8px; }
+    .agenda-check {
+      width: 28px;
+      height: 28px;
+      border: 1px solid var(--line);
+      border-radius: 50%;
+      color: var(--success);
+      background: white;
+    }
+    .alert-item { grid-template-columns: 32px minmax(0,1fr) auto; background: var(--warning-soft); }
+    .alert-icon {
+      width: 32px;
+      height: 32px;
+      display: grid;
+      place-items: center;
+      border-radius: 10px;
+      color: #a86708;
+      background: #ffe3ac;
+    }
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      width: fit-content;
+      border-radius: 999px;
+      padding: 5px 8px;
+      color: #625d71;
+      background: var(--soft);
+      font-size: 8px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+    .tag.success { color: #23764b; background: var(--success-soft); }
+    .tag.warning { color: #9a6109; background: var(--warning-soft); }
+    .tag.danger { color: #a83243; background: var(--danger-soft); }
+    .tag.dark { color: white; background: var(--ink); }
+    .tag.lime { color: var(--ink); background: var(--lime-2); }
+
+    .kanban {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(235px, 1fr));
+      gap: 12px;
+      overflow-x: auto;
+      overscroll-behavior-inline: contain;
+      scroll-snap-type: x proximity;
+      padding-bottom: 10px;
+    }
+    .kanban-column {
+      min-height: 520px;
+      border: 1px solid var(--line);
+      border-radius: 17px;
+      padding: 11px;
+      background: #f8f7fa;
+      scroll-snap-align: start;
+    }
+    .kanban-column.drag-over { border-color: #a68be7; background: #f2edff; }
+    .kanban-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 3px 3px 11px;
+    }
+    .kanban-title { display: flex; align-items: center; gap: 8px; font-size: 11px; font-weight: 800; }
+    .stage-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--stage); }
+    .kanban-count {
+      min-width: 22px;
+      height: 22px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      color: var(--muted);
+      background: white;
+      font-size: 8px;
+      font-weight: 800;
+    }
+    .kanban-cards { display: grid; gap: 9px; }
+    .deal-card {
+      border: 1px solid transparent;
+      border-radius: 14px;
+      padding: 13px;
+      background: white;
+      box-shadow: 0 4px 14px rgba(39,32,61,.05);
+      transition: transform .18s, border-color .18s, box-shadow .18s;
+    }
+    .deal-card:hover { transform: translateY(-2px); border-color: #ded8ef; box-shadow: var(--shadow-sm); }
+    .deal-card.dragging { opacity: .5; rotate: 1deg; }
+    .deal-card-top { display: flex; justify-content: space-between; gap: 9px; }
+    .deal-card h3 { margin: 0; font-size: 11px; line-height: 1.4; }
+    .deal-menu {
+      border: 0;
+      color: #aaa7b4;
+      background: none;
+      padding: 0 2px;
+    }
+    .deal-company { margin: 5px 0 11px; color: var(--muted); font-size: 8px; }
+    .deal-value { margin-bottom: 11px; font-size: 15px; font-weight: 800; letter-spacing: -.5px; }
+    .deal-meta { display: flex; align-items: center; justify-content: space-between; gap: 6px; padding-top: 10px; border-top: 1px solid #f0eef3; }
+    .deal-owner { display: flex; align-items: center; gap: 5px; color: #777381; font-size: 8px; }
+    .mini-avatar {
+      width: 21px;
+      height: 21px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      color: var(--ink);
+      background: var(--lavender);
+      font-size: 7px;
+      font-weight: 900;
+    }
+    .stale { color: var(--warning); font-size: 10px; }
+    .stage-select-mobile {
+      display: none;
+      width: 100%;
+      min-height: 32px;
+      margin-top: 10px;
+      padding: 5px 8px;
+      border-radius: 9px;
+      font-size: 9px;
+    }
+    .empty-column {
+      display: grid;
+      place-items: center;
+      min-height: 110px;
+      border: 1px dashed #d8d5df;
+      border-radius: 13px;
+      color: #a19eaa;
+      font-size: 9px;
+      text-align: center;
+    }
+
+    .toolbar {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
+    }
+    .toolbar-search { position: relative; flex: 1; min-width: 210px; }
+    .toolbar-search i { position: absolute; left: 13px; top: 50%; translate: 0 -50%; color: #9c99a7; }
+    .toolbar-search input { min-height: 40px; padding-left: 38px; background: white; }
+    .toolbar select { width: auto; min-width: 150px; min-height: 40px; padding-block: 8px; font-size: 10px; }
+
+    .data-card {
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      background: white;
+      overflow: hidden;
+    }
+    .table-wrap { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; }
+    th {
+      padding: 12px 16px;
+      color: #8e8a9a;
+      background: #faf9fb;
+      font-size: 9px;
+      font-weight: 800;
+      text-align: left;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      white-space: nowrap;
+    }
+    td { padding: 13px 16px; border-top: 1px solid #f0eef3; font-size: 10px; vertical-align: middle; }
+    tbody tr { transition: background .15s; }
+    tbody tr:hover { background: #fcfbff; }
+    .person { display: flex; align-items: center; gap: 10px; min-width: 180px; }
+    .person strong, .person span { display: block; }
+    .person strong { font-size: 10px; }
+    .person span { margin-top: 2px; color: var(--muted); font-size: 8px; }
+    .cell-muted { color: var(--muted); }
+    .row-actions { display: flex; justify-content: flex-end; gap: 5px; }
+    .icon-action {
+      width: 30px;
+      height: 30px;
+      border: 0;
+      border-radius: 9px;
+      color: #777381;
+      background: var(--soft);
+    }
+    .icon-action:hover { color: var(--ink); background: var(--lavender-2); }
+    .mobile-records { display: none; }
+    .mobile-record {
+      border-bottom: 1px solid var(--line);
+      padding: 15px;
+    }
+    .mobile-record:last-child { border-bottom: 0; }
+    .mobile-record-head { display: flex; justify-content: space-between; gap: 10px; }
+    .mobile-record h3 { margin: 0; font-size: 12px; }
+    .mobile-record p { margin: 4px 0 0; color: var(--muted); font-size: 9px; }
+    .mobile-record-meta { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: 12px; }
+
+    .follow-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+      gap: 14px;
+    }
+    .follow-column {
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      padding: 14px;
+      background: white;
+    }
+    .follow-column-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 11px; }
+    .follow-column-head h2 { margin: 0; font-size: 12px; }
+    .follow-list { display: grid; gap: 8px; }
+    .follow-card {
+      display: grid;
+      grid-template-columns: 32px minmax(0,1fr) auto;
+      align-items: center;
+      gap: 9px;
+      border-radius: 13px;
+      padding: 10px;
+      background: var(--soft);
+    }
+    .follow-card.overdue { background: var(--danger-soft); }
+    .follow-type {
+      width: 32px;
+      height: 32px;
+      display: grid;
+      place-items: center;
+      border-radius: 10px;
+      color: var(--ink);
+      background: white;
+    }
+    .follow-card strong, .follow-card span { display: block; }
+    .follow-card strong { font-size: 9px; line-height: 1.4; }
+    .follow-card span { margin-top: 3px; color: var(--muted); font-size: 8px; }
+    .round-check {
+      width: 28px;
+      height: 28px;
+      border: 1px solid #d9d6e0;
+      border-radius: 50%;
+      color: var(--success);
+      background: white;
+    }
+
+    .timeline { position: relative; display: grid; gap: 0; }
+    .timeline::before {
+      content: "";
+      position: absolute;
+      top: 12px;
+      bottom: 12px;
+      left: 18px;
+      width: 1px;
+      background: var(--line);
+    }
+    .timeline-item {
+      position: relative;
+      display: grid;
+      grid-template-columns: 38px minmax(0,1fr);
+      gap: 12px;
+      padding-bottom: 14px;
+    }
+    .timeline-icon {
+      position: relative;
+      z-index: 1;
+      width: 38px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      border: 5px solid white;
+      border-radius: 50%;
+      color: var(--ink);
+      background: var(--lavender);
+      font-size: 11px;
+    }
+    .timeline-body {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 13px;
+      background: white;
+    }
+    .timeline-head { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 7px; }
+    .timeline-head strong { font-size: 10px; }
+    .timeline-head time { color: var(--muted); font-size: 8px; white-space: nowrap; }
+    .timeline-body p { margin: 0; color: #555160; font-size: 10px; line-height: 1.6; white-space: pre-line; }
+    .timeline-meta { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 9px; }
+
+    .quote-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+      gap: 12px;
+    }
+    .quote-card {
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      padding: 16px;
+      background: white;
+    }
+    .quote-top { display: flex; justify-content: space-between; gap: 9px; }
+    .quote-number { color: #817a9f; font-size: 9px; font-weight: 800; }
+    .quote-card h3 { margin: 8px 0 4px; font-size: 12px; }
+    .quote-card p { margin: 0; color: var(--muted); font-size: 9px; }
+    .quote-total { margin: 18px 0 13px; font-size: 22px; font-weight: 800; letter-spacing: -.8px; }
+    .quote-foot { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding-top: 12px; border-top: 1px solid var(--line); }
+    .quote-foot span { color: var(--muted); font-size: 8px; }
+
+    .seller-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+    .seller-card {
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      padding: 16px;
+      background: white;
+    }
+    .seller-card-head { display: flex; align-items: center; gap: 10px; }
+    .seller-card-head .avatar { width: 42px; height: 42px; }
+    .seller-card-head strong, .seller-card-head span { display: block; }
+    .seller-card-head strong { font-size: 11px; }
+    .seller-card-head span { margin-top: 2px; color: var(--muted); font-size: 8px; }
+    .seller-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 16px; }
+    .seller-stat { border-radius: 12px; padding: 10px; background: var(--soft); }
+    .seller-stat span, .seller-stat strong { display: block; }
+    .seller-stat span { color: var(--muted); font-size: 8px; }
+    .seller-stat strong { margin-top: 4px; font-size: 12px; }
+    .progress { height: 6px; margin-top: 14px; border-radius: 99px; background: #efedf3; overflow: hidden; }
+    .progress span { display: block; height: 100%; border-radius: inherit; background: var(--lime); }
+
+    .empty-state {
+      min-height: 240px;
+      display: grid;
+      place-items: center;
+      padding: 35px;
+      text-align: center;
+    }
+    .empty-state-icon {
+      width: 58px;
+      height: 58px;
+      display: grid;
+      place-items: center;
+      margin: auto;
+      border-radius: 18px;
+      color: #756c9e;
+      background: var(--lavender-2);
+      font-size: 22px;
+    }
+    .empty-state h2 { margin: 14px 0 6px; font-size: 15px; }
+    .empty-state p { max-width: 360px; margin: 0 auto 14px; color: var(--muted); font-size: 10px; line-height: 1.6; }
+
+    .drawer-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 35;
+      background: rgba(24,21,36,.45);
+      backdrop-filter: blur(3px);
+    }
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      display: grid;
+      place-items: center;
+      padding: 20px;
+      background: rgba(29,26,42,.56);
+      backdrop-filter: blur(5px);
+      animation: fadeIn .16s ease;
+    }
+    .modal {
+      width: min(620px, 100%);
+      max-height: min(88vh, 780px);
+      display: flex;
+      flex-direction: column;
+      border: 1px solid rgba(255,255,255,.8);
+      border-radius: 22px;
+      background: white;
+      box-shadow: 0 28px 80px rgba(25,20,44,.25);
+      overflow: hidden;
+      animation: modalIn .2s ease;
+    }
+    .modal.wide { width: min(820px, 100%); }
+    .modal-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 15px;
+      padding: 20px 22px;
+      border-bottom: 1px solid var(--line);
+    }
+    .modal-head h2 { margin: 0; font-size: 18px; letter-spacing: -.6px; }
+    .modal-head p { margin: 5px 0 0; color: var(--muted); font-size: 9px; }
+    .modal-close {
+      width: 34px;
+      height: 34px;
+      flex: none;
+      border: 0;
+      border-radius: 50%;
+      color: var(--muted);
+      background: var(--soft);
+    }
+    .modal-body { padding: 20px 22px; overflow-y: auto; }
+    .modal-foot {
+      display: flex;
+      justify-content: flex-end;
+      gap: 9px;
+      padding: 15px 22px;
+      border-top: 1px solid var(--line);
+      background: #fcfbfd;
+    }
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .form-grid .field + .field { margin-top: 0; }
+    .span-2 { grid-column: 1 / -1; }
+    .quote-items { display: grid; gap: 8px; }
+    .quote-item {
+      display: grid;
+      grid-template-columns: minmax(0,1fr) 90px 120px 34px;
+      gap: 8px;
+      align-items: end;
+    }
+    .quote-item input { min-height: 40px; }
+    .quote-summary {
+      width: min(310px, 100%);
+      display: grid;
+      gap: 7px;
+      margin: 16px 0 0 auto;
+      border-radius: 14px;
+      padding: 13px;
+      background: var(--soft);
+    }
+    .quote-summary-row { display: flex; justify-content: space-between; gap: 12px; color: var(--muted); font-size: 10px; }
+    .quote-summary-row.total { padding-top: 8px; border-top: 1px solid #dfdce6; color: var(--ink); font-size: 13px; font-weight: 800; }
+
+    .toast-root {
+      position: fixed;
+      z-index: 150;
+      right: max(18px, env(safe-area-inset-right));
+      bottom: max(18px, env(safe-area-inset-bottom));
+      display: grid;
+      gap: 8px;
+      width: min(360px, calc(100vw - 36px));
+      pointer-events: none;
+    }
+    .toast {
+      display: grid;
+      grid-template-columns: 30px 1fr;
+      align-items: center;
+      gap: 9px;
+      border: 1px solid rgba(255,255,255,.15);
+      border-radius: 14px;
+      padding: 12px;
+      color: white;
+      background: var(--ink);
+      box-shadow: var(--shadow);
+      animation: toastIn .25s ease;
+    }
+    .toast i { width: 30px; height: 30px; display: grid; place-items: center; border-radius: 9px; color: var(--ink); background: var(--lime); }
+    .toast strong, .toast span { display: block; }
+    .toast strong { font-size: 10px; }
+    .toast span { margin-top: 2px; color: #bbb9c4; font-size: 8px; }
+    .toast.error i { background: #ff9fac; }
+
+    .loading-layer {
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      display: grid;
+      place-items: center;
+      color: white;
+      background: rgba(33,31,47,.62);
+      backdrop-filter: blur(4px);
+    }
+    .loader-card { display: grid; place-items: center; gap: 12px; font-size: 11px; font-weight: 700; }
+    .spinner {
+      width: 34px;
+      height: 34px;
+      border: 3px solid rgba(255,255,255,.2);
+      border-top-color: var(--lime);
+      border-radius: 50%;
+      animation: spin .75s linear infinite;
+    }
+
+    @keyframes spin { to { rotate: 360deg; } }
+    @keyframes fadeIn { from { opacity: 0; } }
+    @keyframes modalIn { from { opacity: 0; transform: translateY(10px) scale(.985); } }
+    @keyframes toastIn { from { opacity: 0; transform: translateY(12px); } }
+
+    @media (max-width: 1120px) {
+      .metric-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
+      .quote-grid, .seller-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
+    }
+    @media (max-width: 900px) {
+      :root { --topbar: 72px; }
+      .app-shell { display: block; padding: 0; }
+      .workspace { min-height: 100vh; border-radius: 0; }
+      .sidebar {
+        position: fixed;
+        inset: 10px auto 10px 10px;
+        z-index: 50;
+        width: min(var(--sidebar), calc(100vw - 40px));
+        height: auto;
+        transform: translateX(calc(-100% - 22px));
+        transition: transform .24s ease;
+      }
+      .app-shell.drawer-open .sidebar { transform: translateX(0); }
+      .mobile-menu { display: inline-flex; }
+      .topbar { padding: 13px 16px; }
+      .topbar-title { min-width: 0; }
+      .topbar-title span { display: none; }
+      .global-search { width: auto; flex: 1; margin-left: 0; }
+      .main { padding: 18px 16px max(24px, env(safe-area-inset-bottom)); }
+      .dashboard-grid { grid-template-columns: 1fr; }
+      .follow-grid { grid-template-columns: 1fr; }
+      .stage-select-mobile { display: block; }
+    }
+    @media (max-width: 720px) {
+      .login-screen { padding: 0; display: block; }
+      .login-shell { min-height: 100vh; display: block; border: 0; border-radius: 0; }
+      .login-brand { min-height: 270px; padding: max(26px, env(safe-area-inset-top)) 25px 28px; }
+      .login-copy h1 { margin-top: 13px; font-size: 36px; }
+      .login-copy p { font-size: 12px; }
+      .login-features { display: none; }
+      .login-form-wrap { padding: 34px 25px max(35px, env(safe-area-inset-bottom)); }
+      .page-head { align-items: stretch; flex-direction: column; }
+      .page-head .btn { flex: 1; }
+      .head-actions { width: 100%; }
+      .metric-grid { grid-template-columns: 1fr 1fr; gap: 9px; }
+      .metric-card { min-height: 119px; padding: 14px; }
+      .metric-value { font-size: 20px; }
+      .pipeline-summary { grid-template-columns: repeat(5, 120px); overflow-x: auto; padding-bottom: 5px; }
+      .quote-grid, .seller-grid { grid-template-columns: 1fr; }
+      .table-wrap { display: none; }
+      .mobile-records { display: block; }
+      .form-grid { grid-template-columns: 1fr; }
+      .span-2 { grid-column: auto; }
+      .quote-item { grid-template-columns: 1fr 68px 90px 34px; }
+      .quote-item .field label { font-size: 9px; }
+    }
+    @media (max-width: 520px) {
+      .topbar-title { display: none; }
+      .global-search input { font-size: 16px; }
+      .top-icon { width: 38px; height: 38px; }
+      .main { padding-inline: 12px; }
+      .metric-grid { grid-template-columns: 1fr 1fr; }
+      .metric-label { font-size: 9px; }
+      .metric-foot { display: none; }
+      .panel { padding: 14px; }
+      .kanban { grid-template-columns: repeat(5, calc(100vw - 48px)); }
+      .kanban-column { min-height: 420px; }
+      .modal-backdrop { padding: 0; align-items: end; }
+      .modal, .modal.wide {
+        width: 100%;
+        max-height: 92vh;
+        border-radius: 22px 22px 0 0;
+        padding-bottom: env(safe-area-inset-bottom);
+      }
+      .modal-head, .modal-body { padding-inline: 17px; }
+      .modal-foot { padding-inline: 17px; }
+      .modal-foot .btn { flex: 1; }
+      .quote-item { grid-template-columns: 1fr 58px 80px 32px; gap: 5px; }
+      .toolbar select { flex: 1; min-width: 125px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; transition-duration: .01ms !important; }
+    }
+
+    /* Legibilidad y desplazamiento para pantallas de cualquier altura */
+    html, body {
+      height: 100%;
+      overflow: hidden;
+    }
+    body { font-size: 15px; }
+    .login-screen {
+      width: 100%;
+      height: 100dvh;
+      min-height: 0;
+      overflow-x: hidden;
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      scrollbar-gutter: stable;
+    }
+    .login-shell { flex: none; }
+    .app-shell {
+      height: 100dvh;
+      min-height: 0;
+      overflow: hidden;
+    }
+    .workspace {
+      height: calc(100dvh - 24px);
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    .topbar { flex: 0 0 auto; }
+    .main {
+      flex: 1 1 auto;
+      min-height: 0;
+      overflow-x: hidden;
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      scrollbar-gutter: stable;
+    }
+    .sidebar {
+      min-height: 0;
+      overflow: hidden;
+    }
+    .nav-list {
+      min-height: 0;
+      overflow-x: hidden;
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      scrollbar-gutter: stable;
+      padding-right: 3px;
+    }
+    .sidebar-bottom { flex: 0 0 auto; }
+    .kanban, .table-wrap, .pipeline-summary {
+      scrollbar-gutter: stable;
+      scrollbar-width: thin;
+      scrollbar-color: #b9afd7 transparent;
+    }
+    .main, .nav-list, .modal-body, .login-screen {
+      scrollbar-width: thin;
+      scrollbar-color: #aaa0c9 transparent;
+    }
+    .main::-webkit-scrollbar,
+    .nav-list::-webkit-scrollbar,
+    .modal-body::-webkit-scrollbar,
+    .login-screen::-webkit-scrollbar {
+      width: 10px;
+    }
+    .kanban::-webkit-scrollbar,
+    .table-wrap::-webkit-scrollbar,
+    .pipeline-summary::-webkit-scrollbar {
+      height: 10px;
+    }
+    .main::-webkit-scrollbar-thumb,
+    .nav-list::-webkit-scrollbar-thumb,
+    .modal-body::-webkit-scrollbar-thumb,
+    .login-screen::-webkit-scrollbar-thumb,
+    .kanban::-webkit-scrollbar-thumb,
+    .table-wrap::-webkit-scrollbar-thumb,
+    .pipeline-summary::-webkit-scrollbar-thumb {
+      border: 2px solid transparent;
+      border-radius: 999px;
+      background: #aaa0c9;
+      background-clip: padding-box;
+    }
+    .main::-webkit-scrollbar-track,
+    .nav-list::-webkit-scrollbar-track,
+    .modal-body::-webkit-scrollbar-track,
+    .login-screen::-webkit-scrollbar-track,
+    .kanban::-webkit-scrollbar-track,
+    .table-wrap::-webkit-scrollbar-track,
+    .pipeline-summary::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .btn { font-size: 14px; }
+    .btn-sm { font-size: 12px; }
+    .field label { font-size: 13px; }
+    .field small { font-size: 12px; }
+    input, select, textarea { font-size: 14px; }
+    .form-error { font-size: 13px; }
+    .login-form-wrap > p { font-size: 15px; }
+    .login-note { font-size: 12px; }
+    .nav-btn { font-size: 14px; }
+    .sidebar-caption { font-size: 11px; }
+    .install-card strong { font-size: 13px; }
+    .install-card span { font-size: 11px; }
+    .user-card strong { font-size: 13px; }
+    .user-card small { font-size: 11px; }
+    .topbar-title strong { font-size: 17px; }
+    .topbar-title span { font-size: 12px; }
+    .global-search input { font-size: 13px; }
+    .eyebrow { font-size: 11px; }
+    .page-head p:not(.eyebrow) { font-size: 14px; }
+    .metric-label { font-size: 12px; }
+    .metric-foot { font-size: 11px; }
+    .panel-head h2 { font-size: 16px; }
+    .panel-head p { font-size: 11px; }
+    .panel-link { font-size: 12px; }
+    .pipeline-step span { font-size: 10px; }
+    .pipeline-step strong { font-size: 14px; }
+    .bar-value, .bar-label { font-size: 10px; }
+    .agenda-item strong, .alert-item strong { font-size: 12px; }
+    .agenda-item span, .alert-item span { font-size: 10px; }
+    .agenda-time { font-size: 10px; }
+    .tag { font-size: 10px; }
+    .kanban-title { font-size: 13px; }
+    .kanban-count { font-size: 10px; }
+    .deal-card h3 { font-size: 13px; }
+    .deal-company { font-size: 10px; }
+    .deal-owner { font-size: 10px; }
+    .stage-select-mobile { font-size: 12px; }
+    .empty-column { font-size: 11px; }
+    .toolbar select { font-size: 13px; }
+    th { font-size: 11px; }
+    td { font-size: 12px; }
+    .person strong { font-size: 12px; }
+    .person span { font-size: 10px; }
+    .mobile-record h3 { font-size: 14px; }
+    .mobile-record p { font-size: 11px; }
+    .follow-column-head h2 { font-size: 14px; }
+    .follow-card strong { font-size: 12px; }
+    .follow-card span { font-size: 10px; }
+    .timeline-head strong { font-size: 12px; }
+    .timeline-head time { font-size: 10px; }
+    .timeline-body p { font-size: 12px; }
+    .quote-number { font-size: 11px; }
+    .quote-card h3 { font-size: 14px; }
+    .quote-card p { font-size: 11px; }
+    .quote-foot span { font-size: 10px; }
+    .seller-card-head strong { font-size: 13px; }
+    .seller-card-head span { font-size: 10px; }
+    .seller-stat span { font-size: 10px; }
+    .seller-stat strong { font-size: 14px; }
+    .empty-state h2 { font-size: 17px; }
+    .empty-state p { font-size: 12px; }
+    .modal-head p { font-size: 11px; }
+    .quote-summary-row { font-size: 12px; }
+    .quote-summary-row.total { font-size: 15px; }
+    .toast strong { font-size: 12px; }
+    .toast span { font-size: 10px; }
+
+    @media (max-width: 900px) {
+      .workspace { height: 100dvh; }
+      .sidebar { height: calc(100dvh - 20px); }
+      .main {
+        padding-bottom: max(30px, calc(env(safe-area-inset-bottom) + 18px));
+        -webkit-overflow-scrolling: touch;
+      }
+    }
+    @media (max-width: 720px) {
+      .login-screen {
+        height: 100dvh;
+        min-height: 0;
+        overflow-y: auto;
+      }
+      .login-shell { min-height: 100dvh; }
+      input, select, textarea { font-size: 16px; }
+      .metric-label { font-size: 11px; }
+      .quote-item .field label { font-size: 11px; }
+    }
+    @media (max-width: 520px) {
+      .metric-label { font-size: 11px; }
+      .metric-foot { display: flex; font-size: 10px; }
+    }
+    @media (max-height: 700px) {
+      .install-card { display: none; }
+      .sidebar-caption { margin-top: 18px; }
+      .login-brand, .login-form-wrap { padding-top: 30px; padding-bottom: 30px; }
+    }
+  </style>
+</head>
+<body>
+  <section class="login-screen" id="loginScreen">
+    <div class="login-shell">
+      <div class="login-brand">
+        <div class="brand"><span class="brand-mark">N</span><span>Nexo CRM</span></div>
+        <div class="login-copy">
+          <span class="login-kicker">Ventas en movimiento</span>
+          <h1>Tu negocio, en un solo lugar.</h1>
+          <p>Organizá clientes, oportunidades y seguimientos sin pagar por herramientas complicadas.</p>
+        </div>
+        <div class="login-features">
+          <div class="login-feature"><i class="bi bi-kanban"></i> Embudo visual</div>
+          <div class="login-feature"><i class="bi bi-bell"></i> Alertas automáticas</div>
+          <div class="login-feature"><i class="bi bi-shield-check"></i> Acceso privado</div>
+          <div class="login-feature"><i class="bi bi-graph-up-arrow"></i> Métricas simples</div>
+        </div>
+      </div>
+      <form class="login-form-wrap" id="loginForm">
+        <h2>Bienvenido</h2>
+        <p>Ingresá con el usuario configurado en tu hoja de Google Sheets.</p>
+        <div class="field">
+          <label for="loginEmail">Email</label>
+          <div class="input-wrap">
+            <i class="bi bi-envelope"></i>
+            <input id="loginEmail" name="email" type="email" autocomplete="username" placeholder="vos@tuempresa.com" required>
+          </div>
+        </div>
+        <div class="field">
+          <label for="loginPassword">Contraseña</label>
+          <div class="input-wrap">
+            <i class="bi bi-lock"></i>
+            <input id="loginPassword" name="password" type="password" autocomplete="current-password" placeholder="••••••••" required>
+          </div>
+        </div>
+        <p class="form-error" id="loginError" role="alert"></p>
+        <div class="login-actions">
+          <button class="btn btn-lime" type="submit"><span>Ingresar al CRM</span><i class="bi bi-arrow-right"></i></button>
+          <button class="btn btn-white" id="demoButton" type="button" hidden><i class="bi bi-stars"></i> Explorar con datos de ejemplo</button>
+        </div>
+        <div class="login-note"><i class="bi bi-shield-lock"></i> Los datos permanecen en tu propia hoja de Google Sheets.</div>
+      </form>
+    </div>
+  </section>
+
+  <div class="app-shell" id="appShell" hidden>
+    <aside class="sidebar" id="sidebar">
+      <div class="brand"><span class="brand-mark">N</span><span>Nexo CRM</span></div>
+      <p class="sidebar-caption">Espacio de trabajo</p>
+      <nav class="nav-list" aria-label="Navegación principal">
+        <button class="nav-btn active" data-view="dashboard"><i class="bi bi-grid-1x2"></i><span>Resumen</span></button>
+        <button class="nav-btn" data-view="pipeline"><i class="bi bi-kanban"></i><span>Embudo de ventas</span></button>
+        <button class="nav-btn" data-view="contacts"><i class="bi bi-people"></i><span>Contactos</span></button>
+        <button class="nav-btn" data-view="followups"><i class="bi bi-calendar2-check"></i><span>Seguimientos</span><b class="nav-badge" id="followBadge">0</b></button>
+        <button class="nav-btn" data-view="conversations"><i class="bi bi-chat-left-text"></i><span>Conversaciones</span></button>
+        <button class="nav-btn" data-view="quotes"><i class="bi bi-receipt"></i><span>Cotizaciones</span></button>
+        <button class="nav-btn" data-view="sellers"><i class="bi bi-bar-chart"></i><span>Vendedores</span></button>
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="install-card">
+          <strong>Instalá Nexo CRM</strong>
+          <span>Accedé como una app desde tu celular o computadora.</span>
+          <button class="btn btn-sm" id="installButton" type="button"><i class="bi bi-download"></i> Instalar</button>
+        </div>
+        <div class="user-card">
+          <span class="avatar lime" id="sidebarAvatar">NA</span>
+          <div><strong id="sidebarUser">Usuario</strong><small id="sidebarRole">Vendedor</small></div>
+          <button class="logout-btn" id="logoutButton" type="button" aria-label="Cerrar sesión"><i class="bi bi-box-arrow-right"></i></button>
+        </div>
+      </div>
+    </aside>
+
+    <section class="workspace">
+      <header class="topbar">
+        <button class="top-icon mobile-menu" id="menuButton" type="button" aria-label="Abrir menú"><i class="bi bi-list"></i></button>
+        <div class="topbar-title"><strong id="greeting">Hola</strong><span id="todayLabel"></span></div>
+        <label class="global-search">
+          <i class="bi bi-search"></i>
+          <input id="globalSearch" type="search" placeholder="Buscar contactos u oportunidades…" aria-label="Buscar">
+        </label>
+        <button class="top-icon" id="alertButton" type="button" aria-label="Ver alertas"><i class="bi bi-bell"></i><span class="dot" id="alertDot"></span></button>
+        <span class="avatar" id="topAvatar">NA</span>
+      </header>
+      <main class="main" id="mainContent"></main>
+    </section>
+    <div class="drawer-overlay" id="drawerOverlay" hidden></div>
+  </div>
+
+  <div id="modalRoot"></div>
+  <div class="toast-root" id="toastRoot" aria-live="polite"></div>
+  <div class="loading-layer" id="loadingLayer" hidden>
+    <div class="loader-card"><span class="spinner"></span><span id="loadingText">Actualizando…</span></div>
+  </div>
+
+  <script>
+    /*
+     * Pegá aquí la URL que termina en /exec después de implementar Code.gs
+     * como Aplicación web en Google Apps Script.
+     */
+    const APPS_SCRIPT_URL = 'PEGA_AQUI_LA_URL_DE_TU_APLICACION_WEB';
+
+    const STAGES = ['Nuevo', 'Contactado', 'Propuesta', 'Negociación', 'Ganado'];
+    const ALL_STAGES = [...STAGES, 'Perdido'];
+    const STAGE_COLORS = {
+      Nuevo: '#b9a7f7',
+      Contactado: '#72b7ff',
+      Propuesta: '#ffc66f',
+      'Negociación': '#ff9c8d',
+      Ganado: '#7ed89f',
+      Perdido: '#d2cfd9'
+    };
+    const TYPE_ICONS = {
+      Llamada: 'telephone',
+      Email: 'envelope',
+      'Reunión': 'camera-video',
+      WhatsApp: 'whatsapp',
+      Tarea: 'check2-square',
+      Nota: 'sticky',
+      Sistema: 'gear'
+    };
+    const VIEW_META = {
+      dashboard: ['Resumen', 'Tu operación comercial de un vistazo'],
+      pipeline: ['Embudo de ventas', 'Mové cada oportunidad a medida que avanza'],
+      contacts: ['Contactos', 'Toda la información de tus clientes y prospectos'],
+      followups: ['Seguimientos', 'Lo que tu equipo necesita hacer a continuación'],
+      conversations: ['Conversaciones', 'Historial unificado de llamadas, mensajes y reuniones'],
+      quotes: ['Cotizaciones', 'Propuestas comerciales listas para enviar'],
+      sellers: ['Panel de vendedores', 'Resultados y actividad de cada integrante']
+    };
+
+    const DEMO_MODE = !/^https:\/\/script\.google\.com\/macros\/s\/.+\/exec/.test(APPS_SCRIPT_URL);
+    const state = {
+      token: sessionStorage.getItem('nexo_token') || '',
+      user: null,
+      settings: { companyName: 'Mi empresa', staleDays: 7 },
+      contacts: [],
+      opportunities: [],
+      followUps: [],
+      conversations: [],
+      quotes: [],
+      sellers: [],
+      view: 'dashboard',
+      search: '',
+      filter: 'Todos',
+      deferredInstall: null,
+      demo: DEMO_MODE
+    };
+
+    const $ = (selector, root = document) => root.querySelector(selector);
+    const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
+    const el = {
+      login: $('#loginScreen'),
+      loginForm: $('#loginForm'),
+      loginError: $('#loginError'),
+      demoButton: $('#demoButton'),
+      shell: $('#appShell'),
+      main: $('#mainContent'),
+      modal: $('#modalRoot'),
+      loading: $('#loadingLayer'),
+      loadingText: $('#loadingText'),
+      toasts: $('#toastRoot'),
+      overlay: $('#drawerOverlay')
+    };
+
+    function esc(value) {
+      return String(value ?? '').replace(/[&<>"']/g, char => ({
+        '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;'
+      })[char]);
+    }
+    function attr(value) { return esc(value).replace(/`/g, '&#096;'); }
+    function initials(value) {
+      return String(value || 'Nexo').trim().split(/\s+/).slice(0, 2).map(part => part[0]).join('').toUpperCase();
+    }
+    function toNumber(value) { const number = Number(value); return Number.isFinite(number) ? number : 0; }
+    function localDate(value, options = {}) {
+      if (!value) return 'Sin fecha';
+      const date = new Date(value.length === 10 ? value + 'T12:00:00' : value);
+      if (Number.isNaN(date.getTime())) return 'Sin fecha';
+      return new Intl.DateTimeFormat('es-AR', options.dateStyle ? options : {
+        day: '2-digit', month: 'short', ...options
+      }).format(date);
+    }
+    function localDateTime(value) {
+      if (!value) return 'Sin fecha';
+      const date = new Date(value);
+      return new Intl.DateTimeFormat('es-AR', {
+        day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit'
+      }).format(date);
+    }
+    function dateInput(value) {
+      if (!value) return '';
+      const d = new Date(value.length === 10 ? value + 'T12:00:00' : value);
+      if (Number.isNaN(d.getTime())) return '';
+      return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+    }
+    function dateTimeInput(value) {
+      const d = value ? new Date(value) : new Date(Date.now() + 86400000);
+      const local = new Date(d.getTime() - d.getTimezoneOffset() * 60000);
+      return local.toISOString().slice(0, 16);
+    }
+    function money(value, currency = 'ARS', compact = false) {
+      try {
+        return new Intl.NumberFormat('es-AR', {
+          style: 'currency', currency, maximumFractionDigits: 0,
+          notation: compact ? 'compact' : 'standard'
+        }).format(toNumber(value));
+      } catch (_) {
+        return '$ ' + Math.round(toNumber(value)).toLocaleString('es-AR');
+      }
+    }
+    function daysSince(value) {
+      const date = new Date(value || 0);
+      return Math.max(0, Math.floor((Date.now() - date.getTime()) / 86400000));
+    }
+    function contactById(id) { return state.contacts.find(item => item.id === id); }
+    function opportunityById(id) { return state.opportunities.find(item => item.id === id); }
+    function staleOpportunities() {
+      const limit = Number(state.settings.staleDays || 7);
+      return state.opportunities.filter(item =>
+        !['Ganado', 'Perdido'].includes(item.stage) && daysSince(item.lastActivity || item.updatedAt) >= limit
+      );
+    }
+    function pendingFollowUps() {
+      return state.followUps.filter(item => item.status !== 'Completado');
+    }
+    function isOverdue(item) {
+      return item.status !== 'Completado' && new Date(item.dueAt).getTime() < Date.now();
+    }
+    function matchesSearch(...fields) {
+      const query = state.search.trim().toLowerCase();
+      return !query || fields.some(value => String(value || '').toLowerCase().includes(query));
+    }
+    function setLoading(active, text = 'Actualizando…') {
+      el.loadingText.textContent = text;
+      el.loading.hidden = !active;
+    }
+    function toast(title, message = '', type = 'success') {
+      const node = document.createElement('div');
+      node.className = `toast ${type === 'error' ? 'error' : ''}`;
+      node.innerHTML = `<i class="bi bi-${type === 'error' ? 'exclamation-triangle' : 'check2'}"></i><div><strong>${esc(title)}</strong><span>${esc(message)}</span></div>`;
+      el.toasts.append(node);
+      setTimeout(() => node.remove(), 3600);
+    }
+
+    async function api(action, payload = {}) {
+      if (state.demo) return demoApi(action, payload);
+      let response;
+      try {
+        response = await fetch(APPS_SCRIPT_URL, {
+          method: 'POST',
+          redirect: 'follow',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify({ action, token: state.token, ...payload })
+        });
+      } catch (_) {
+        throw new Error('No se pudo conectar con Google Sheets. Revisá tu conexión y la URL /exec.');
+      }
+      const text = await response.text();
+      let result;
+      try { result = JSON.parse(text); }
+      catch (_) { throw new Error('Google Apps Script devolvió una respuesta inválida. Revisá la implementación.'); }
+      if (!result.ok) {
+        if (result.code === 'UNAUTHORIZED' && action !== 'login') logout(false);
+        throw new Error(result.error || 'No se pudo completar la operación.');
+      }
+      return result;
+    }
+
+    async function login(email, password) {
+      el.loginError.textContent = '';
+      const button = $('button[type="submit"]', el.loginForm);
+      button.disabled = true;
+      button.innerHTML = '<span class="spinner" style="width:18px;height:18px;border-width:2px"></span> Ingresando…';
+      try {
+        const result = await api('login', { email, password });
+        state.token = result.token;
+        state.user = result.user;
+        sessionStorage.setItem('nexo_token', state.token);
+        await loadData();
+        showApp();
+      } catch (error) {
+        el.loginError.textContent = error.message;
+      } finally {
+        button.disabled = false;
+        button.innerHTML = '<span>Ingresar al CRM</span><i class="bi bi-arrow-right"></i>';
+      }
+    }
+
+    async function loadData() {
+      const data = await api('bootstrap');
+      Object.assign(state, {
+        user: data.user || state.user,
+        settings: { ...state.settings, ...(data.settings || {}) },
+        contacts: data.contacts || [],
+        opportunities: data.opportunities || [],
+        followUps: data.followUps || [],
+        conversations: data.conversations || [],
+        quotes: data.quotes || [],
+        sellers: data.sellers || []
+      });
+    }
+
+    async function mutate(action, payload, successMessage) {
+      setLoading(true);
+      try {
+        await api(action, payload);
+        await loadData();
+        closeModal();
+        render();
+        toast(successMessage || 'Cambios guardados', 'La información ya está actualizada.');
+        return true;
+      } catch (error) {
+        toast('No se pudo guardar', error.message, 'error');
+        return false;
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    function showApp() {
+      el.login.hidden = true;
+      el.shell.hidden = false;
+      const name = state.user?.name || 'Usuario';
+      $('#sidebarUser').textContent = name;
+      $('#sidebarRole').textContent = state.user?.role === 'admin' ? 'Administrador' : 'Vendedor';
+      $('#sidebarAvatar').textContent = initials(name);
+      $('#topAvatar').textContent = initials(name);
+      const hour = new Date().getHours();
+      $('#greeting').textContent = `${hour < 12 ? 'Buen día' : hour < 19 ? 'Buenas tardes' : 'Buenas noches'}, ${name.split(' ')[0]}`;
+      $('#todayLabel').textContent = new Intl.DateTimeFormat('es-AR', { weekday: 'long', day: 'numeric', month: 'long' }).format(new Date());
+      render();
+    }
+
+    async function logout(callApi = true) {
+      if (callApi && state.token) { try { await api('logout'); } catch (_) {} }
+      sessionStorage.removeItem('nexo_token');
+      state.token = '';
+      state.user = null;
+      el.shell.hidden = true;
+      el.login.hidden = false;
+      el.loginForm.reset();
+      closeDrawer();
+    }
+
+    function pageHead(title, subtitle, actions = '') {
+      return `<header class="page-head">
+        <div><p class="eyebrow">${esc(state.settings.companyName || 'Mi empresa')}</p><h1>${esc(title)}</h1><p>${esc(subtitle)}</p></div>
+        ${actions ? `<div class="head-actions">${actions}</div>` : ''}
+      </header>`;
+    }
+
+    function render() {
+      if (!state.user) return;
+      const meta = VIEW_META[state.view] || VIEW_META.dashboard;
+      $$('.nav-btn').forEach(button => button.classList.toggle('active', button.dataset.view === state.view));
+      $('#followBadge').textContent = pendingFollowUps().length;
+      $('#alertDot').hidden = staleOpportunities().length === 0;
+      document.title = `${meta[0]} · Nexo CRM`;
+      const views = {
+        dashboard: renderDashboard,
+        pipeline: renderPipeline,
+        contacts: renderContacts,
+        followups: renderFollowUps,
+        conversations: renderConversations,
+        quotes: renderQuotes,
+        sellers: renderSellers
+      };
+      el.main.innerHTML = (views[state.view] || views.dashboard)();
+      bindViewEvents();
+    }
+
+    function renderDashboard() {
+      const open = state.opportunities.filter(item => !['Ganado', 'Perdido'].includes(item.stage));
+      const won = state.opportunities.filter(item => item.stage === 'Ganado');
+      const pipelineValue = open.reduce((sum, item) => sum + toNumber(item.value), 0);
+      const wonValue = won.reduce((sum, item) => sum + toNumber(item.value), 0);
+      const overdue = pendingFollowUps().filter(isOverdue);
+      return pageHead(
+        `Todo bajo control, ${esc((state.user.name || '').split(' ')[0])}`,
+        'Priorizá oportunidades y seguimientos desde un único panel.',
+        `<button class="btn btn-white" data-action="new-followup"><i class="bi bi-calendar-plus"></i> Seguimiento</button>
+         <button class="btn btn-lime" data-action="new-opportunity"><i class="bi bi-plus-lg"></i> Oportunidad</button>`
+      ) + `
+      <section class="metric-grid">
+        ${metricCard('Pipeline activo', money(pipelineValue, 'ARS', true), `${open.length} oportunidades abiertas`, 'funnel', '#efeaff')}
+        ${metricCard('Ventas ganadas', money(wonValue, 'ARS', true), `${won.length} negocios cerrados`, 'trophy', '#efffc8')}
+        ${metricCard('Seguimientos', pendingFollowUps().length, `${overdue.length} vencidos`, 'calendar2-check', '#e9f5ff')}
+        ${metricCard('Alertas', staleOpportunities().length, 'Oportunidades sin actividad', 'exclamation-triangle', '#fff1dd')}
+      </section>
+      <section class="dashboard-grid">
+        <div class="stack">
+          <article class="panel">
+            <div class="panel-head"><div><h2>Rendimiento comercial</h2><p>Ventas ganadas durante los últimos 6 meses</p></div><button class="panel-link" data-view-jump="pipeline">Ver embudo</button></div>
+            ${pipelineSummary()}
+            ${salesChart()}
+          </article>
+          <article class="panel">
+            <div class="panel-head"><div><h2>Actividad reciente</h2><p>Últimos movimientos registrados por el equipo</p></div><button class="panel-link" data-view-jump="conversations">Ver historial</button></div>
+            ${recentActivities()}
+          </article>
+        </div>
+        <div class="stack">
+          <article class="panel">
+            <div class="panel-head"><div><h2>Próximos seguimientos</h2><p>Tu agenda comercial</p></div><button class="panel-link" data-action="new-followup"><i class="bi bi-plus-lg"></i></button></div>
+            ${agendaList()}
+          </article>
+          <article class="panel">
+            <div class="panel-head"><div><h2>Necesitan atención</h2><p>Oportunidades estancadas</p></div><button class="panel-link" data-view-jump="pipeline">Ver todas</button></div>
+            ${alertsList()}
+          </article>
+        </div>
+      </section>`;
+    }
+
+    function metricCard(label, value, foot, icon, accent) {
+      return `<article class="metric-card" style="--metric-accent:${accent}">
+        <div class="metric-top"><span class="metric-label">${esc(label)}</span><span class="metric-icon"><i class="bi bi-${icon}"></i></span></div>
+        <strong class="metric-value">${esc(value)}</strong>
+        <div class="metric-foot"><span class="trend"><i class="bi bi-arrow-up-right"></i></span><span>${esc(foot)}</span></div>
+      </article>`;
+    }
+
+    function pipelineSummary() {
+      return `<div class="pipeline-summary">${STAGES.map(stage => {
+        const items = state.opportunities.filter(item => item.stage === stage);
+        return `<div class="pipeline-step"><span>${esc(stage)}</span><strong>${money(items.reduce((s, x) => s + toNumber(x.value), 0), 'ARS', true)}</strong><div class="pipeline-line" style="--step-color:${STAGE_COLORS[stage]}"></div></div>`;
+      }).join('')}</div>`;
+    }
+
+    function salesChart() {
+      const now = new Date();
+      const months = Array.from({ length: 6 }, (_, index) => {
+        const d = new Date(now.getFullYear(), now.getMonth() - 5 + index, 1);
+        const value = state.opportunities.filter(item => {
+          const when = new Date(item.updatedAt || item.createdAt);
+          return item.stage === 'Ganado' && when.getMonth() === d.getMonth() && when.getFullYear() === d.getFullYear();
+        }).reduce((sum, item) => sum + toNumber(item.value), 0);
+        return { date: d, value };
+      });
+      const max = Math.max(...months.map(item => item.value), 1);
+      return `<div class="chart">${months.map((item, index) => `
+        <div class="bar-wrap">
+          <span class="bar-value">${item.value ? money(item.value, 'ARS', true) : ''}</span>
+          <span class="bar ${index === months.length - 1 ? 'current' : ''}" style="height:${Math.max(4, (item.value / max) * 125)}px" title="${attr(money(item.value))}"></span>
+          <span class="bar-label">${new Intl.DateTimeFormat('es-AR', { month: 'short' }).format(item.date)}</span>
+        </div>`).join('')}</div>`;
+    }
+
+    function agendaList() {
+      const items = pendingFollowUps().sort((a, b) => new Date(a.dueAt) - new Date(b.dueAt)).slice(0, 5);
+      if (!items.length) return miniEmpty('calendar2-check', 'No hay seguimientos pendientes', 'Creá una tarea para no perder el próximo contacto.');
+      return `<div class="agenda-list">${items.map(item => {
+        const date = new Date(item.dueAt);
+        const contact = contactById(item.contactId);
+        return `<div class="agenda-item">
+          <span class="agenda-time">${String(date.getDate()).padStart(2, '0')}<br>${new Intl.DateTimeFormat('es-AR', { month: 'short' }).format(date)}</span>
+          <div><strong>${esc(item.title)}</strong><span>${esc(contact?.name || item.type)} · ${localDateTime(item.dueAt)}</span></div>
+          <button class="agenda-check" data-complete="${attr(item.id)}" title="Completar"><i class="bi bi-check2"></i></button>
+        </div>`;
+      }).join('')}</div>`;
+    }
+
+    function alertsList() {
+      const alerts = staleOpportunities().sort((a, b) => daysSince(b.lastActivity) - daysSince(a.lastActivity)).slice(0, 4);
+      if (!alerts.length) return miniEmpty('check2-circle', 'Todo está al día', 'No hay oportunidades estancadas.');
+      return `<div class="alert-list">${alerts.map(item => `
+        <button class="alert-item" data-edit-opportunity="${attr(item.id)}" style="border:0;width:100%;text-align:left">
+          <span class="alert-icon"><i class="bi bi-hourglass-split"></i></span>
+          <span><strong>${esc(item.title)}</strong><span>Sin actividad hace ${daysSince(item.lastActivity)} días</span></span>
+          <b class="tag warning">${esc(item.stage)}</b>
+        </button>`).join('')}</div>`;
+    }
+
+    function recentActivities() {
+      const items = [...state.conversations].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).slice(0, 4);
+      if (!items.length) return miniEmpty('chat-left-text', 'Todavía no hay actividad', 'Registrá una conversación para construir el historial.');
+      return `<div class="activity-list">${items.map(item => {
+        const contact = contactById(item.contactId);
+        return `<div class="activity-item" style="grid-template-columns:34px minmax(0,1fr) auto">
+          <span class="follow-type"><i class="bi bi-${TYPE_ICONS[item.channel] || 'chat'}"></i></span>
+          <div><strong style="display:block;font-size:10px">${esc(contact?.name || item.channel)}</strong><span style="display:block;margin-top:3px;color:var(--muted);font-size:8px">${esc(item.summary)}</span></div>
+          <span style="color:var(--muted);font-size:8px">${localDate(item.createdAt)}</span>
+        </div>`;
+      }).join('')}</div>`;
+    }
+
+    function miniEmpty(icon, title, text) {
+      return `<div style="padding:20px 8px;text-align:center"><span class="empty-state-icon" style="width:44px;height:44px;border-radius:14px;font-size:17px"><i class="bi bi-${icon}"></i></span><strong style="display:block;margin-top:10px;font-size:10px">${esc(title)}</strong><span style="display:block;margin-top:4px;color:var(--muted);font-size:8px">${esc(text)}</span></div>`;
+    }
+
+    function renderPipeline() {
+      const ownerOptions = ['Todos', ...new Set(state.sellers.map(item => item.name).filter(Boolean))];
+      const filtered = state.opportunities.filter(item =>
+        (state.filter === 'Todos' || item.owner === state.filter) &&
+        matchesSearch(item.title, contactById(item.contactId)?.name, item.owner)
+      );
+      return pageHead(
+        'Embudo de ventas',
+        'Arrastrá las tarjetas para avanzar oportunidades. En celulares usá el selector de etapa.',
+        `<button class="btn btn-lime" data-action="new-opportunity"><i class="bi bi-plus-lg"></i> Nueva oportunidad</button>`
+      ) + `
+      <div class="toolbar">
+        <label class="toolbar-search"><i class="bi bi-search"></i><input class="local-search" type="search" value="${attr(state.search)}" placeholder="Buscar oportunidad…"></label>
+        <select class="owner-filter" aria-label="Filtrar por vendedor">${ownerOptions.map(name => `<option ${name === state.filter ? 'selected' : ''}>${esc(name)}</option>`).join('')}</select>
+        <span class="tag dark">${filtered.length} oportunidades</span>
+      </div>
+      <section class="kanban">${STAGES.map(stage => {
+        const deals = filtered.filter(item => item.stage === stage);
+        return `<article class="kanban-column" data-drop-stage="${attr(stage)}" style="--stage:${STAGE_COLORS[stage]}">
+          <header class="kanban-head"><div class="kanban-title"><span class="stage-dot"></span>${esc(stage)}</div><span class="kanban-count">${deals.length}</span></header>
+          <div class="kanban-cards">${deals.length ? deals.map(dealCard).join('') : '<div class="empty-column">Soltá una oportunidad acá</div>'}</div>
+        </article>`;
+      }).join('')}</section>`;
+    }
+
+    function dealCard(item) {
+      const contact = contactById(item.contactId);
+      const stale = staleOpportunities().some(opp => opp.id === item.id);
+      return `<article class="deal-card" draggable="true" data-deal-id="${attr(item.id)}">
+        <div class="deal-card-top"><h3>${esc(item.title)}</h3><button class="deal-menu" data-edit-opportunity="${attr(item.id)}" title="Editar"><i class="bi bi-three-dots"></i></button></div>
+        <p class="deal-company">${esc(contact?.company || contact?.name || 'Sin contacto asociado')}</p>
+        <div class="deal-value">${money(item.value)}</div>
+        <div class="deal-meta">
+          <span class="deal-owner"><span class="mini-avatar">${initials(item.owner)}</span>${esc(item.owner || 'Sin asignar')}</span>
+          ${stale ? `<i class="bi bi-hourglass-split stale" title="Sin actividad hace ${daysSince(item.lastActivity)} días"></i>` : `<span class="tag">${toNumber(item.probability)}%</span>`}
+        </div>
+        <select class="stage-select-mobile" data-stage-select="${attr(item.id)}" aria-label="Cambiar etapa">${ALL_STAGES.map(stage => `<option ${stage === item.stage ? 'selected' : ''}>${esc(stage)}</option>`).join('')}</select>
+      </article>`;
+    }
+
+    function renderContacts() {
+      const contacts = state.contacts.filter(item =>
+        (state.filter === 'Todos' || item.status === state.filter) &&
+        matchesSearch(item.name, item.company, item.email, item.phone, item.owner)
+      );
+      return pageHead(
+        'Contactos',
+        `${state.contacts.length} personas y empresas en tu base`,
+        `<button class="btn btn-lime" data-action="new-contact"><i class="bi bi-person-plus"></i> Nuevo contacto</button>`
+      ) + `
+      <div class="toolbar">
+        <label class="toolbar-search"><i class="bi bi-search"></i><input class="local-search" type="search" value="${attr(state.search)}" placeholder="Buscar por nombre, empresa o email…"></label>
+        <select class="status-filter"><option>Todos</option>${['Prospecto','Cliente','Inactivo'].map(x => `<option ${x === state.filter ? 'selected' : ''}>${x}</option>`).join('')}</select>
+      </div>
+      <section class="data-card">
+        ${contacts.length ? `
+        <div class="table-wrap"><table>
+          <thead><tr><th>Contacto</th><th>Estado</th><th>Teléfono</th><th>Responsable</th><th>Última actualización</th><th></th></tr></thead>
+          <tbody>${contacts.map(item => `<tr>
+            <td><div class="person"><span class="avatar">${initials(item.name)}</span><div><strong>${esc(item.name)}</strong><span>${esc(item.company || item.email || 'Sin empresa')}</span></div></div></td>
+            <td><span class="tag ${item.status === 'Cliente' ? 'success' : item.status === 'Inactivo' ? '' : 'lime'}">${esc(item.status)}</span></td>
+            <td class="cell-muted">${esc(item.phone || '—')}</td><td>${esc(item.owner || '—')}</td><td class="cell-muted">${localDate(item.updatedAt)}</td>
+            <td><div class="row-actions"><button class="icon-action" data-add-conversation="${attr(item.id)}" title="Registrar conversación"><i class="bi bi-chat-left-text"></i></button><button class="icon-action" data-edit-contact="${attr(item.id)}" title="Editar"><i class="bi bi-pencil"></i></button></div></td>
+          </tr>`).join('')}</tbody>
+        </table></div>
+        <div class="mobile-records">${contacts.map(item => `<article class="mobile-record">
+          <div class="mobile-record-head"><div><h3>${esc(item.name)}</h3><p>${esc(item.company || item.email || 'Sin empresa')}</p></div><span class="tag ${item.status === 'Cliente' ? 'success' : 'lime'}">${esc(item.status)}</span></div>
+          <div class="mobile-record-meta"><span class="cell-muted" style="font-size:9px"><i class="bi bi-person"></i> ${esc(item.owner || 'Sin asignar')}</span><div class="row-actions"><button class="icon-action" data-add-conversation="${attr(item.id)}"><i class="bi bi-chat-left-text"></i></button><button class="icon-action" data-edit-contact="${attr(item.id)}"><i class="bi bi-pencil"></i></button></div></div>
+        </article>`).join('')}</div>` : emptyState('people', 'Todavía no hay contactos', 'Creá tu primer contacto para empezar a organizar oportunidades y conversaciones.', 'new-contact', 'Crear contacto')}
+      </section>`;
+    }
+
+    function renderFollowUps() {
+      const pending = pendingFollowUps().filter(item => matchesSearch(item.title, contactById(item.contactId)?.name, item.owner));
+      const overdue = pending.filter(isOverdue).sort(sortByDue);
+      const today = pending.filter(item => !isOverdue(item) && new Date(item.dueAt).toDateString() === new Date().toDateString()).sort(sortByDue);
+      const later = pending.filter(item => !isOverdue(item) && new Date(item.dueAt).toDateString() !== new Date().toDateString()).sort(sortByDue);
+      return pageHead(
+        'Seguimientos',
+        'Una agenda clara para que ninguna venta quede olvidada.',
+        `<button class="btn btn-lime" data-action="new-followup"><i class="bi bi-plus-lg"></i> Nuevo seguimiento</button>`
+      ) + `
+      <div class="toolbar"><label class="toolbar-search"><i class="bi bi-search"></i><input class="local-search" type="search" value="${attr(state.search)}" placeholder="Buscar seguimiento…"></label></div>
+      <section class="follow-grid">
+        ${followColumn('Vencidos', overdue, 'danger')}
+        ${followColumn('Para hoy', today, 'warning')}
+        ${followColumn('Próximos', later, 'success')}
+      </section>`;
+    }
+    function sortByDue(a, b) { return new Date(a.dueAt) - new Date(b.dueAt); }
+    function followColumn(title, items, tone) {
+      return `<article class="follow-column"><header class="follow-column-head"><h2>${esc(title)}</h2><span class="tag ${tone}">${items.length}</span></header>
+        <div class="follow-list">${items.length ? items.map(followCard).join('') : miniEmpty('calendar2', 'Sin tareas', 'No hay seguimientos en este grupo.')}</div></article>`;
+    }
+    function followCard(item) {
+      const contact = contactById(item.contactId);
+      return `<div class="follow-card ${isOverdue(item) ? 'overdue' : ''}">
+        <span class="follow-type"><i class="bi bi-${TYPE_ICONS[item.type] || 'check2-square'}"></i></span>
+        <div><strong>${esc(item.title)}</strong><span>${esc(contact?.name || item.owner || item.type)} · ${localDateTime(item.dueAt)}</span></div>
+        <button class="round-check" data-complete="${attr(item.id)}" title="Marcar como completado"><i class="bi bi-check2"></i></button>
+      </div>`;
+    }
+
+    function renderConversations() {
+      const items = state.conversations.filter(item => {
+        const contact = contactById(item.contactId);
+        const opp = opportunityById(item.opportunityId);
+        return matchesSearch(item.summary, item.channel, item.owner, contact?.name, opp?.title);
+      }).sort((a,b) => new Date(b.createdAt) - new Date(a.createdAt));
+      return pageHead(
+        'Conversaciones',
+        'Llamadas, emails, WhatsApp, reuniones y notas en una línea de tiempo.',
+        `<button class="btn btn-lime" data-action="new-conversation"><i class="bi bi-chat-dots"></i> Registrar conversación</button>`
+      ) + `
+      <div class="toolbar"><label class="toolbar-search"><i class="bi bi-search"></i><input class="local-search" type="search" value="${attr(state.search)}" placeholder="Buscar en el historial…"></label></div>
+      <section class="panel">${items.length ? `<div class="timeline">${items.map(item => {
+        const contact = contactById(item.contactId);
+        const opp = opportunityById(item.opportunityId);
+        return `<article class="timeline-item">
+          <span class="timeline-icon"><i class="bi bi-${TYPE_ICONS[item.channel] || 'chat'}"></i></span>
+          <div class="timeline-body">
+            <div class="timeline-head"><strong>${esc(contact?.name || item.channel)}</strong><time>${localDateTime(item.createdAt)}</time></div>
+            <p>${esc(item.summary)}</p>
+            <div class="timeline-meta"><span class="tag">${esc(item.channel)}</span><span class="tag">${esc(item.direction)}</span>${opp ? `<span class="tag lime">${esc(opp.title)}</span>` : ''}<span class="tag">${esc(item.owner)}</span></div>
+          </div>
+        </article>`;
+      }).join('')}</div>` : emptyState('chat-left-text', 'Sin conversaciones registradas', 'Guardá el resumen de una llamada, reunión o mensaje para mantener el contexto.', 'new-conversation', 'Registrar conversación')}</section>`;
+    }
+
+    function renderQuotes() {
+      const items = state.quotes.filter(item => matchesSearch(item.quoteNumber, contactById(item.contactId)?.name, item.status, item.owner))
+        .sort((a,b) => new Date(b.createdAt) - new Date(a.createdAt));
+      return pageHead(
+        'Cotizaciones',
+        'Creá propuestas claras y guardá su estado comercial.',
+        `<button class="btn btn-lime" data-action="new-quote"><i class="bi bi-plus-lg"></i> Nueva cotización</button>`
+      ) + `
+      <div class="toolbar"><label class="toolbar-search"><i class="bi bi-search"></i><input class="local-search" type="search" value="${attr(state.search)}" placeholder="Buscar cotización…"></label></div>
+      ${items.length ? `<section class="quote-grid">${items.map(item => {
+        const contact = contactById(item.contactId);
+        const tone = item.status === 'Aceptada' ? 'success' : item.status === 'Rechazada' || item.status === 'Vencida' ? 'danger' : item.status === 'Enviada' ? 'warning' : '';
+        return `<article class="quote-card">
+          <div class="quote-top"><span class="quote-number">${esc(item.quoteNumber)}</span><span class="tag ${tone}">${esc(item.status)}</span></div>
+          <h3>${esc(contact?.name || 'Sin contacto')}</h3><p>${esc(contact?.company || opportunityById(item.opportunityId)?.title || item.owner)}</p>
+          <div class="quote-total">${money(item.total, item.currency)}</div>
+          <div class="quote-foot"><span>Válida hasta ${localDate(item.validUntil)}</span><div class="row-actions"><button class="icon-action" data-print-quote="${attr(item.id)}" title="Imprimir o guardar PDF"><i class="bi bi-printer"></i></button><button class="icon-action" data-edit-quote="${attr(item.id)}" title="Editar"><i class="bi bi-pencil"></i></button></div></div>
+        </article>`;
+      }).join('')}</section>` : `<section class="data-card">${emptyState('receipt', 'Todavía no hay cotizaciones', 'Armá una propuesta con productos o servicios y guardala en tu CRM.', 'new-quote', 'Crear cotización')}</section>`}`;
+    }
+
+    function renderSellers() {
+      const sellers = state.sellers.length ? state.sellers : [{ id: 'self', name: state.user.name, email: state.user.email, role: state.user.role }];
+      const cards = sellers.map(seller => {
+        const deals = state.opportunities.filter(item => item.owner === seller.name);
+        const won = deals.filter(item => item.stage === 'Ganado');
+        const open = deals.filter(item => !['Ganado','Perdido'].includes(item.stage));
+        const wonValue = won.reduce((sum,item) => sum + toNumber(item.value), 0);
+        const conversion = deals.length ? Math.round((won.length / deals.length) * 100) : 0;
+        return `<article class="seller-card">
+          <div class="seller-card-head"><span class="avatar">${initials(seller.name)}</span><div><strong>${esc(seller.name)}</strong><span>${esc(seller.email || 'Sin email')} · ${seller.role === 'admin' ? 'Administrador' : 'Vendedor'}</span></div></div>
+          <div class="seller-stats"><div class="seller-stat"><span>Ventas ganadas</span><strong>${money(wonValue, 'ARS', true)}</strong></div><div class="seller-stat"><span>Pipeline abierto</span><strong>${open.length}</strong></div></div>
+          <div class="progress" title="${conversion}% de conversión"><span style="width:${conversion}%"></span></div>
+          <div style="display:flex;justify-content:space-between;margin-top:7px;color:var(--muted);font-size:8px"><span>Conversión</span><strong>${conversion}%</strong></div>
+        </article>`;
+      }).join('');
+      return pageHead(
+        'Panel de vendedores',
+        'Compará pipeline, cierres y conversión por responsable.',
+        state.user.role === 'admin' ? `<button class="btn btn-lime" data-action="new-seller"><i class="bi bi-person-plus"></i> Nuevo vendedor</button>` : ''
+      ) + `<section class="seller-grid">${cards}</section>`;
+    }
+
+    function emptyState(icon, title, text, action, label) {
+      return `<div class="empty-state"><div><span class="empty-state-icon"><i class="bi bi-${icon}"></i></span><h2>${esc(title)}</h2><p>${esc(text)}</p><button class="btn btn-lime btn-sm" data-action="${attr(action)}"><i class="bi bi-plus-lg"></i> ${esc(label)}</button></div></div>`;
+    }
+
+    function bindViewEvents() {
+      $$('.local-search', el.main).forEach(input => input.addEventListener('input', debounce(event => {
+        state.search = event.target.value;
+        render();
+        requestAnimationFrame(() => {
+          const next = $('.local-search', el.main);
+          if (next) { next.focus(); next.setSelectionRange(next.value.length, next.value.length); }
+        });
+      }, 220)));
+      $('.owner-filter', el.main)?.addEventListener('change', event => { state.filter = event.target.value; render(); });
+      $('.status-filter', el.main)?.addEventListener('change', event => { state.filter = event.target.value; render(); });
+
+      $$('.deal-card', el.main).forEach(card => {
+        card.addEventListener('dragstart', event => { card.classList.add('dragging'); event.dataTransfer.setData('text/plain', card.dataset.dealId); });
+        card.addEventListener('dragend', () => card.classList.remove('dragging'));
+      });
+      $$('.kanban-column', el.main).forEach(column => {
+        column.addEventListener('dragover', event => { event.preventDefault(); column.classList.add('drag-over'); });
+        column.addEventListener('dragleave', () => column.classList.remove('drag-over'));
+        column.addEventListener('drop', async event => {
+          event.preventDefault(); column.classList.remove('drag-over');
+          const id = event.dataTransfer.getData('text/plain');
+          const item = opportunityById(id);
+          if (item && item.stage !== column.dataset.dropStage) await changeStage(id, column.dataset.dropStage);
+        });
+      });
+      $$('[data-stage-select]', el.main).forEach(select => select.addEventListener('change', event => changeStage(event.target.dataset.stageSelect, event.target.value)));
+    }
+
+    async function changeStage(id, stage) {
+      await mutate('changeStage', { id, stage }, `Oportunidad movida a ${stage}`);
+    }
+
+    function openModal(title, subtitle, body, onSubmit, options = {}) {
+      el.modal.innerHTML = `<div class="modal-backdrop" role="presentation">
+        <section class="modal ${options.wide ? 'wide' : ''}" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+          <header class="modal-head"><div><h2 id="modalTitle">${esc(title)}</h2><p>${esc(subtitle || '')}</p></div><button class="modal-close" type="button" data-close-modal aria-label="Cerrar"><i class="bi bi-x-lg"></i></button></header>
+          <form id="modalForm"><div class="modal-body">${body}</div><footer class="modal-foot"><button class="btn btn-white" type="button" data-close-modal>Cancelar</button><button class="btn btn-lime" type="submit"><i class="bi bi-check2"></i> ${esc(options.submitLabel || 'Guardar')}</button></footer></form>
+        </section>
+      </div>`;
+      const backdrop = $('.modal-backdrop', el.modal);
+      backdrop.addEventListener('mousedown', event => { if (event.target === backdrop) closeModal(); });
+      $$('[data-close-modal]', el.modal).forEach(button => button.addEventListener('click', closeModal));
+      $('#modalForm', el.modal).addEventListener('submit', async event => {
+        event.preventDefault();
+        const submit = $('button[type="submit"]', event.currentTarget);
+        submit.disabled = true;
+        try { await onSubmit(event.currentTarget); }
+        finally { submit.disabled = false; }
+      });
+      document.body.style.overflow = 'hidden';
+      setTimeout(() => $('input,select,textarea', el.modal)?.focus(), 60);
+    }
+    function closeModal() { el.modal.innerHTML = ''; document.body.style.overflow = ''; }
+
+    function sellerOptions(selected = '') {
+      const names = [...new Set([state.user.name, ...state.sellers.map(item => item.name)].filter(Boolean))];
+      return names.map(name => `<option ${name === selected ? 'selected' : ''}>${esc(name)}</option>`).join('');
+    }
+    function contactOptions(selected = '') {
+      return `<option value="">Sin contacto</option>${state.contacts.map(item => `<option value="${attr(item.id)}" ${item.id === selected ? 'selected' : ''}>${esc(item.name)}${item.company ? ` · ${esc(item.company)}` : ''}</option>`).join('')}`;
+    }
+    function opportunityOptions(selected = '') {
+      return `<option value="">Sin oportunidad</option>${state.opportunities.filter(item => !['Perdido'].includes(item.stage)).map(item => `<option value="${attr(item.id)}" ${item.id === selected ? 'selected' : ''}>${esc(item.title)}</option>`).join('')}`;
+    }
+
+    function contactModal(id = '') {
+      const item = contactById(id) || {};
+      openModal(item.id ? 'Editar contacto' : 'Nuevo contacto', 'Información central del cliente o prospecto.', `
+        <div class="form-grid">
+          <div class="field"><label>Nombre *</label><input name="name" value="${attr(item.name)}" required maxlength="120"></div>
+          <div class="field"><label>Empresa</label><input name="company" value="${attr(item.company)}" maxlength="120"></div>
+          <div class="field"><label>Email</label><input name="email" type="email" value="${attr(item.email)}"></div>
+          <div class="field"><label>Teléfono</label><input name="phone" type="tel" value="${attr(item.phone)}"></div>
+          <div class="field"><label>Estado</label><select name="status">${['Prospecto','Cliente','Inactivo'].map(x => `<option ${x === (item.status || 'Prospecto') ? 'selected' : ''}>${x}</option>`).join('')}</select></div>
+          <div class="field"><label>Origen</label><input name="source" value="${attr(item.source)}" placeholder="Referido, Instagram, web…"></div>
+          <div class="field span-2"><label>Responsable</label><select name="owner">${sellerOptions(item.owner || state.user.name)}</select></div>
+          <div class="field span-2"><label>Notas</label><textarea name="notes" placeholder="Contexto, preferencias, próximos pasos…">${esc(item.notes)}</textarea></div>
+        </div>`,
+        form => mutate('saveContact', { data: { id: item.id, ...formObject(form) } }, item.id ? 'Contacto actualizado' : 'Contacto creado')
+      );
+    }
+
+    function opportunityModal(id = '') {
+      const item = opportunityById(id) || {};
+      openModal(item.id ? 'Editar oportunidad' : 'Nueva oportunidad', 'Definí el negocio y su próximo objetivo.', `
+        <div class="form-grid">
+          <div class="field span-2"><label>Nombre de la oportunidad *</label><input name="title" value="${attr(item.title)}" required maxlength="160" placeholder="Ej. Rediseño ecommerce"></div>
+          <div class="field"><label>Contacto</label><select name="contactId">${contactOptions(item.contactId)}</select></div>
+          <div class="field"><label>Valor estimado</label><input name="value" type="number" min="0" step="0.01" value="${attr(item.value || '')}" placeholder="0"></div>
+          <div class="field"><label>Etapa</label><select name="stage">${ALL_STAGES.map(x => `<option ${x === (item.stage || 'Nuevo') ? 'selected' : ''}>${x}</option>`).join('')}</select></div>
+          <div class="field"><label>Probabilidad (%)</label><input name="probability" type="number" min="0" max="100" value="${attr(item.probability ?? 10)}"></div>
+          <div class="field"><label>Responsable</label><select name="owner">${sellerOptions(item.owner || state.user.name)}</select></div>
+          <div class="field"><label>Cierre esperado</label><input name="expectedClose" type="date" value="${attr(dateInput(item.expectedClose))}"></div>
+          <div class="field span-2"><label>Notas</label><textarea name="notes">${esc(item.notes)}</textarea></div>
+        </div>`,
+        form => {
+          const data = formObject(form);
+          data.value = toNumber(data.value); data.probability = toNumber(data.probability);
+          return mutate('saveOpportunity', { data: { id: item.id, ...data } }, item.id ? 'Oportunidad actualizada' : 'Oportunidad creada');
+        }
+      );
+    }
+
+    function followUpModal() {
+      openModal('Nuevo seguimiento', 'Programá el próximo contacto comercial.', `
+        <div class="form-grid">
+          <div class="field span-2"><label>Asunto *</label><input name="title" required maxlength="180" placeholder="Llamar para revisar la propuesta"></div>
+          <div class="field"><label>Fecha y hora *</label><input name="dueAt" type="datetime-local" value="${dateTimeInput()}" required></div>
+          <div class="field"><label>Tipo</label><select name="type">${['Llamada','Email','Reunión','WhatsApp','Tarea'].map(x => `<option>${x}</option>`).join('')}</select></div>
+          <div class="field"><label>Contacto</label><select name="contactId">${contactOptions()}</select></div>
+          <div class="field"><label>Oportunidad</label><select name="opportunityId">${opportunityOptions()}</select></div>
+          <div class="field span-2"><label>Responsable</label><select name="owner">${sellerOptions(state.user.name)}</select></div>
+          <div class="field span-2"><label>Notas</label><textarea name="notes" placeholder="Información útil para completar la tarea"></textarea></div>
+        </div>`,
+        form => {
+          const data = formObject(form);
+          data.dueAt = new Date(data.dueAt).toISOString();
+          return mutate('saveFollowUp', { data }, 'Seguimiento programado');
+        }
+      );
+    }
+
+    function conversationModal(contactId = '') {
+      openModal('Registrar conversación', 'Guardá el contexto para que todo el equipo esté al día.', `
+        <div class="form-grid">
+          <div class="field"><label>Contacto</label><select name="contactId">${contactOptions(contactId)}</select></div>
+          <div class="field"><label>Oportunidad</label><select name="opportunityId">${opportunityOptions()}</select></div>
+          <div class="field"><label>Canal</label><select name="channel">${['Llamada','Email','WhatsApp','Reunión','Nota'].map(x => `<option>${x}</option>`).join('')}</select></div>
+          <div class="field"><label>Dirección</label><select name="direction">${['Saliente','Entrante','Nota'].map(x => `<option>${x}</option>`).join('')}</select></div>
+          <div class="field span-2"><label>Resumen *</label><textarea name="summary" required maxlength="3000" placeholder="¿Qué conversaron y cuál es el próximo paso?"></textarea></div>
+        </div>`,
+        form => mutate('saveConversation', { data: formObject(form) }, 'Conversación registrada')
+      );
+    }
+
+    function quoteModal(id = '') {
+      const item = state.quotes.find(x => x.id === id) || {};
+      let items = [];
+      try { items = JSON.parse(item.itemsJson || '[]'); } catch (_) {}
+      if (!items.length) items = [{ description: '', quantity: 1, price: 0 }];
+      openModal(item.id ? 'Editar cotización' : 'Nueva cotización', 'Agregá productos o servicios y calculá el total.', `
+        <div class="form-grid">
+          <div class="field"><label>Contacto</label><select name="contactId">${contactOptions(item.contactId)}</select></div>
+          <div class="field"><label>Oportunidad</label><select name="opportunityId">${opportunityOptions(item.opportunityId)}</select></div>
+          <div class="field"><label>Estado</label><select name="status">${['Borrador','Enviada','Aceptada','Rechazada','Vencida'].map(x => `<option ${x === (item.status || 'Borrador') ? 'selected' : ''}>${x}</option>`).join('')}</select></div>
+          <div class="field"><label>Válida hasta</label><input name="validUntil" type="date" value="${attr(dateInput(item.validUntil || new Date(Date.now() + 15 * 86400000)))}"></div>
+          <div class="field"><label>Moneda</label><select name="currency">${['ARS','USD','EUR','UYU','CLP','MXN'].map(x => `<option ${x === (item.currency || 'ARS') ? 'selected' : ''}>${x}</option>`).join('')}</select></div>
+          <div class="field"><label>Impuesto (%)</label><input id="quoteTax" name="taxRate" type="number" min="0" max="100" step="0.01" value="${attr(item.taxRate ?? 0)}"></div>
+          <div class="field span-2"><label>Ítems *</label><div class="quote-items" id="quoteItems">${items.map(quoteItemRow).join('')}</div><button class="btn btn-soft btn-sm" id="addQuoteItem" type="button" style="margin-top:8px;width:max-content"><i class="bi bi-plus-lg"></i> Agregar ítem</button></div>
+          <div class="field span-2"><label>Notas</label><textarea name="notes">${esc(item.notes)}</textarea></div>
+        </div>
+        <div class="quote-summary"><div class="quote-summary-row"><span>Subtotal</span><strong id="quoteSubtotal">$ 0</strong></div><div class="quote-summary-row"><span>Impuestos</span><strong id="quoteTaxes">$ 0</strong></div><div class="quote-summary-row total"><span>Total</span><strong id="quoteTotal">$ 0</strong></div></div>`,
+        form => {
+          const data = formObject(form);
+          data.taxRate = toNumber(data.taxRate);
+          data.items = $$('.quote-item', form).map(row => ({
+            description: $('[data-item-description]', row).value,
+            quantity: toNumber($('[data-item-quantity]', row).value),
+            price: toNumber($('[data-item-price]', row).value)
+          })).filter(x => x.description);
+          return mutate('saveQuote', { data: { id: item.id, ...data } }, item.id ? 'Cotización actualizada' : 'Cotización creada');
+        },
+        { wide: true }
+      );
+      $('#addQuoteItem').addEventListener('click', () => {
+        $('#quoteItems').insertAdjacentHTML('beforeend', quoteItemRow({ description: '', quantity: 1, price: 0 }));
+        bindQuoteCalculator();
+      });
+      bindQuoteCalculator();
+    }
+
+    function quoteItemRow(item) {
+      return `<div class="quote-item">
+        <div class="field"><label>Descripción</label><input data-item-description value="${attr(item.description)}" placeholder="Producto o servicio"></div>
+        <div class="field"><label>Cant.</label><input data-item-quantity type="number" min="0" step="0.01" value="${attr(item.quantity || 1)}"></div>
+        <div class="field"><label>Precio</label><input data-item-price type="number" min="0" step="0.01" value="${attr(item.price || 0)}"></div>
+        <button class="icon-action remove-quote-item" type="button" aria-label="Quitar ítem"><i class="bi bi-trash"></i></button>
+      </div>`;
+    }
+    function bindQuoteCalculator() {
+      const form = $('#modalForm');
+      if (!form) return;
+      const calculate = () => {
+        const subtotal = $$('.quote-item', form).reduce((sum, row) => sum + toNumber($('[data-item-quantity]', row).value) * toNumber($('[data-item-price]', row).value), 0);
+        const tax = subtotal * toNumber($('#quoteTax').value) / 100;
+        const currency = $('[name="currency"]', form).value;
+        $('#quoteSubtotal').textContent = money(subtotal, currency);
+        $('#quoteTaxes').textContent = money(tax, currency);
+        $('#quoteTotal').textContent = money(subtotal + tax, currency);
+      };
+      $$('[data-item-quantity],[data-item-price],#quoteTax,[name="currency"]', form).forEach(input => {
+        input.oninput = calculate; input.onchange = calculate;
+      });
+      $$('.remove-quote-item', form).forEach(button => button.onclick = () => {
+        if ($$('.quote-item', form).length > 1) button.closest('.quote-item').remove();
+        calculate();
+      });
+      calculate();
+    }
+
+    function sellerModal() {
+      openModal('Nuevo vendedor', 'Creá un acceso privado para otro integrante.', `
+        <div class="form-grid">
+          <div class="field"><label>Nombre *</label><input name="name" required maxlength="120"></div>
+          <div class="field"><label>Email *</label><input name="email" type="email" required></div>
+          <div class="field"><label>Contraseña inicial *</label><input name="password" type="password" minlength="8" required><small>Mínimo 8 caracteres.</small></div>
+          <div class="field"><label>Rol</label><select name="role"><option value="seller">Vendedor</option><option value="admin">Administrador</option></select></div>
+        </div>`,
+        form => mutate('saveSeller', { data: { ...formObject(form), active: true } }, 'Vendedor creado')
+      );
+    }
+
+    function formObject(form) {
+      return Object.fromEntries(new FormData(form).entries());
+    }
+
+    function printQuote(id) {
+      const quote = state.quotes.find(item => item.id === id);
+      if (!quote) return;
+      const contact = contactById(quote.contactId) || {};
+      let items = [];
+      try { items = JSON.parse(quote.itemsJson || '[]'); } catch (_) {}
+      const win = window.open('', '_blank');
+      if (!win) { toast('Ventana bloqueada', 'Permití ventanas emergentes para imprimir.', 'error'); return; }
+      win.document.write(`<!doctype html><html lang="es"><head><meta charset="utf-8"><title>${esc(quote.quoteNumber)}</title><style>
+        body{font:14px Arial,sans-serif;color:#242231;margin:50px}header{display:flex;justify-content:space-between;border-bottom:3px solid #242231;padding-bottom:24px}h1{margin:0}.logo{font-size:22px;font-weight:800}.meta{text-align:right;color:#666}section{margin-top:35px}table{width:100%;border-collapse:collapse;margin-top:25px}th,td{padding:12px;border-bottom:1px solid #ddd;text-align:left}th{background:#f5f3fa}.num{text-align:right}.total{width:320px;margin:25px 0 0 auto}.total p{display:flex;justify-content:space-between}.grand{font-size:20px;font-weight:bold;border-top:2px solid #242231;padding-top:12px}.print{position:fixed;right:24px;top:24px;padding:10px 16px;border:0;border-radius:8px;background:#c8ff47;font-weight:bold}@media print{.print{display:none}body{margin:0}}</style></head><body>
+        <button class="print" onclick="window.print()">Imprimir / Guardar PDF</button>
+        <header><div><div class="logo">Nexo CRM</div><p>${esc(state.settings.companyName || '')}</p></div><div class="meta"><strong>${esc(quote.quoteNumber)}</strong><p>Fecha: ${localDate(quote.createdAt)}</p><p>Válida hasta: ${localDate(quote.validUntil)}</p></div></header>
+        <section><h2>Cotización para ${esc(contact.name || 'Cliente')}</h2><p>${esc(contact.company || '')}</p><p>${esc(contact.email || '')}</p></section>
+        <table><thead><tr><th>Descripción</th><th class="num">Cantidad</th><th class="num">Precio</th><th class="num">Total</th></tr></thead><tbody>${items.map(item => `<tr><td>${esc(item.description)}</td><td class="num">${item.quantity}</td><td class="num">${money(item.price, quote.currency)}</td><td class="num">${money(item.total, quote.currency)}</td></tr>`).join('')}</tbody></table>
+        <div class="total"><p><span>Subtotal</span><strong>${money(quote.subtotal, quote.currency)}</strong></p><p><span>Impuestos (${toNumber(quote.taxRate)}%)</span><strong>${money(quote.taxAmount, quote.currency)}</strong></p><p class="grand"><span>Total</span><strong>${money(quote.total, quote.currency)}</strong></p></div>
+        ${quote.notes ? `<section><h3>Notas</h3><p>${esc(quote.notes)}</p></section>` : ''}
+      </body></html>`);
+      win.document.close();
+    }
+
+    function handleAction(action) {
+      const actions = {
+        'new-contact': () => contactModal(),
+        'new-opportunity': () => opportunityModal(),
+        'new-followup': () => followUpModal(),
+        'new-conversation': () => conversationModal(),
+        'new-quote': () => quoteModal(),
+        'new-seller': () => sellerModal()
+      };
+      actions[action]?.();
+    }
+
+    function openView(view) {
+      if (!VIEW_META[view]) return;
+      state.view = view;
+      state.search = '';
+      state.filter = 'Todos';
+      closeDrawer();
+      render();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    function openDrawer() { el.shell.classList.add('drawer-open'); el.overlay.hidden = false; }
+    function closeDrawer() { el.shell.classList.remove('drawer-open'); el.overlay.hidden = true; }
+    function debounce(fn, wait) {
+      let timer;
+      return (...args) => { clearTimeout(timer); timer = setTimeout(() => fn(...args), wait); };
+    }
+
+    function bindGlobalEvents() {
+      el.loginForm.addEventListener('submit', event => {
+        event.preventDefault();
+        const data = formObject(event.currentTarget);
+        login(data.email, data.password);
+      });
+      el.demoButton.addEventListener('click', () => login('demo@nexo.local', 'demostracion'));
+      $$('.nav-btn').forEach(button => button.addEventListener('click', () => openView(button.dataset.view)));
+      $('#logoutButton').addEventListener('click', () => logout(true));
+      $('#menuButton').addEventListener('click', openDrawer);
+      el.overlay.addEventListener('click', closeDrawer);
+      $('#alertButton').addEventListener('click', () => { openView('pipeline'); state.filter = 'Todos'; });
+      $('#globalSearch').addEventListener('input', debounce(event => {
+        state.search = event.target.value;
+        if (state.search && !['pipeline','contacts'].includes(state.view)) state.view = 'contacts';
+        render();
+      }, 240));
+      document.addEventListener('click', event => {
+        const actionButton = event.target.closest('[data-action]');
+        if (actionButton) handleAction(actionButton.dataset.action);
+        const jump = event.target.closest('[data-view-jump]');
+        if (jump) openView(jump.dataset.viewJump);
+        const editContact = event.target.closest('[data-edit-contact]');
+        if (editContact) contactModal(editContact.dataset.editContact);
+        const editOpportunity = event.target.closest('[data-edit-opportunity]');
+        if (editOpportunity) opportunityModal(editOpportunity.dataset.editOpportunity);
+        const addConversation = event.target.closest('[data-add-conversation]');
+        if (addConversation) conversationModal(addConversation.dataset.addConversation);
+        const editQuote = event.target.closest('[data-edit-quote]');
+        if (editQuote) quoteModal(editQuote.dataset.editQuote);
+        const print = event.target.closest('[data-print-quote]');
+        if (print) printQuote(print.dataset.printQuote);
+        const complete = event.target.closest('[data-complete]');
+        if (complete) mutate('completeFollowUp', { id: complete.dataset.complete, completed: true }, 'Seguimiento completado');
+      });
+      document.addEventListener('keydown', event => {
+        if (event.key === 'Escape') { if (el.modal.innerHTML) closeModal(); else closeDrawer(); }
+      });
+      window.addEventListener('beforeinstallprompt', event => {
+        event.preventDefault();
+        state.deferredInstall = event;
+      });
+      $('#installButton').addEventListener('click', installApp);
+    }
+
+    async function installApp() {
+      if (state.deferredInstall) {
+        state.deferredInstall.prompt();
+        await state.deferredInstall.userChoice;
+        state.deferredInstall = null;
+        return;
+      }
+      const ios = /iphone|ipad|ipod/i.test(navigator.userAgent);
+      toast(
+        ios ? 'Instalar en iPhone o iPad' : 'Instalar Nexo CRM',
+        ios ? 'En Safari: Compartir → Agregar a inicio.' : 'En el menú del navegador elegí “Instalar aplicación” o “Agregar a pantalla principal”.'
+      );
+    }
+
+    function installMetadata() {
+      function icon(size) {
+        const canvas = document.createElement('canvas');
+        canvas.width = canvas.height = size;
+        const ctx = canvas.getContext('2d');
+        ctx.fillStyle = '#211f2f';
+        ctx.fillRect(0, 0, size, size);
+        const margin = size * .16;
+        const radius = size * .20;
+        ctx.fillStyle = '#c8ff47';
+        const left = margin;
+        const top = margin;
+        const width = size - margin * 2;
+        const height = size - margin * 2;
+        ctx.beginPath();
+        ctx.moveTo(left + radius, top);
+        ctx.lineTo(left + width - radius, top);
+        ctx.quadraticCurveTo(left + width, top, left + width, top + radius);
+        ctx.lineTo(left + width, top + height - radius);
+        ctx.quadraticCurveTo(left + width, top + height, left + width - radius, top + height);
+        ctx.lineTo(left + radius, top + height);
+        ctx.quadraticCurveTo(left, top + height, left, top + height - radius);
+        ctx.lineTo(left, top + radius);
+        ctx.quadraticCurveTo(left, top, left + radius, top);
+        ctx.closePath();
+        ctx.fill();
+        ctx.fillStyle = '#211f2f';
+        ctx.font = `900 ${size * .47}px Manrope, Arial`;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText('N', size / 2, size * .52);
+        return canvas.toDataURL('image/png');
+      }
+      const icon192 = icon(192);
+      const icon512 = icon(512);
+      $('#favicon').href = icon192;
+      $('#appleIcon').href = icon192;
+      const manifest = {
+        name: 'Nexo CRM',
+        short_name: 'Nexo CRM',
+        description: 'CRM privado de ventas y seguimiento',
+        start_url: location.href.split('#')[0],
+        scope: new URL('.', location.href).href,
+        display: 'standalone',
+        orientation: 'any',
+        background_color: '#f4f0ff',
+        theme_color: '#211f2f',
+        icons: [
+          { src: icon192, sizes: '192x192', type: 'image/png', purpose: 'any maskable' },
+          { src: icon512, sizes: '512x512', type: 'image/png', purpose: 'any maskable' }
+        ]
+      };
+      $('#appManifest').href = URL.createObjectURL(new Blob([JSON.stringify(manifest)], { type: 'application/manifest+json' }));
+    }
+
+    function demoSeed() {
+      const now = Date.now();
+      return {
+        user: { id: 'USR-DEMO', name: 'Taylor Gómez', email: 'demo@nexo.local', role: 'admin', active: true },
+        settings: { companyName: 'Estudio Norte', staleDays: 7 },
+        sellers: [
+          { id: 'USR-1', name: 'Taylor Gómez', email: 'taylor@demo.com', role: 'admin', active: true },
+          { id: 'USR-2', name: 'Lucía Méndez', email: 'lucia@demo.com', role: 'seller', active: true },
+          { id: 'USR-3', name: 'Mateo Ruiz', email: 'mateo@demo.com', role: 'seller', active: true }
+        ],
+        contacts: [
+          { id: 'CON-1', name: 'Sofía Torres', company: 'Bruma Café', email: 'sofia@bruma.com', phone: '+54 11 5555 1200', status: 'Cliente', source: 'Referido', owner: 'Taylor Gómez', updatedAt: new Date(now - 86400000).toISOString() },
+          { id: 'CON-2', name: 'Martín Acosta', company: 'Órbita Tech', email: 'martin@orbita.io', phone: '+54 11 5555 2811', status: 'Prospecto', source: 'Web', owner: 'Lucía Méndez', updatedAt: new Date(now - 3*86400000).toISOString() },
+          { id: 'CON-3', name: 'Camila Ríos', company: 'Casa Nativa', email: 'camila@casanativa.com', phone: '+54 351 555 2001', status: 'Prospecto', source: 'Instagram', owner: 'Mateo Ruiz', updatedAt: new Date(now - 6*86400000).toISOString() },
+          { id: 'CON-4', name: 'Julián Vera', company: 'Lumen Arquitectura', email: 'julian@lumen.ar', phone: '+54 11 5555 3090', status: 'Cliente', source: 'Evento', owner: 'Taylor Gómez', updatedAt: new Date(now - 2*86400000).toISOString() },
+          { id: 'CON-5', name: 'Elena Paz', company: 'Verde Sur', email: 'elena@verdesur.com', phone: '+54 261 555 7020', status: 'Prospecto', source: 'LinkedIn', owner: 'Lucía Méndez', updatedAt: new Date(now - 9*86400000).toISOString() }
+        ],
+        opportunities: [
+          { id: 'OPP-1', title: 'Expansión ecommerce', contactId: 'CON-2', value: 1850000, stage: 'Nuevo', probability: 10, owner: 'Lucía Méndez', expectedClose: dateInput(new Date(now + 24*86400000)), lastActivity: new Date(now - 2*86400000).toISOString(), createdAt: new Date(now - 5*86400000).toISOString(), updatedAt: new Date(now - 2*86400000).toISOString() },
+          { id: 'OPP-2', title: 'Campaña temporada otoño', contactId: 'CON-3', value: 920000, stage: 'Contactado', probability: 25, owner: 'Mateo Ruiz', expectedClose: dateInput(new Date(now + 14*86400000)), lastActivity: new Date(now - 9*86400000).toISOString(), createdAt: new Date(now - 18*86400000).toISOString(), updatedAt: new Date(now - 9*86400000).toISOString() },
+          { id: 'OPP-3', title: 'Renovación sitio institucional', contactId: 'CON-4', value: 2450000, stage: 'Propuesta', probability: 50, owner: 'Taylor Gómez', expectedClose: dateInput(new Date(now + 9*86400000)), lastActivity: new Date(now - 1*86400000).toISOString(), createdAt: new Date(now - 25*86400000).toISOString(), updatedAt: new Date(now - 1*86400000).toISOString() },
+          { id: 'OPP-4', title: 'Automatización comercial', contactId: 'CON-5', value: 3100000, stage: 'Negociación', probability: 75, owner: 'Lucía Méndez', expectedClose: dateInput(new Date(now + 5*86400000)), lastActivity: new Date(now - 10*86400000).toISOString(), createdAt: new Date(now - 28*86400000).toISOString(), updatedAt: new Date(now - 10*86400000).toISOString() },
+          { id: 'OPP-5', title: 'Identidad nueva sucursal', contactId: 'CON-1', value: 1280000, stage: 'Ganado', probability: 100, owner: 'Taylor Gómez', expectedClose: dateInput(new Date(now - 8*86400000)), lastActivity: new Date(now - 8*86400000).toISOString(), createdAt: new Date(now - 35*86400000).toISOString(), updatedAt: new Date(now - 8*86400000).toISOString() },
+          { id: 'OPP-6', title: 'Contenido mensual', contactId: 'CON-3', value: 760000, stage: 'Ganado', probability: 100, owner: 'Mateo Ruiz', expectedClose: dateInput(new Date(now - 42*86400000)), lastActivity: new Date(now - 42*86400000).toISOString(), createdAt: new Date(now - 60*86400000).toISOString(), updatedAt: new Date(now - 42*86400000).toISOString() }
+        ],
+        followUps: [
+          { id: 'SEG-1', title: 'Revisar ajustes de propuesta', dueAt: new Date(now + 2*3600000).toISOString(), type: 'Llamada', owner: 'Taylor Gómez', status: 'Pendiente', contactId: 'CON-4', opportunityId: 'OPP-3' },
+          { id: 'SEG-2', title: 'Enviar casos de éxito', dueAt: new Date(now + 26*3600000).toISOString(), type: 'Email', owner: 'Lucía Méndez', status: 'Pendiente', contactId: 'CON-2', opportunityId: 'OPP-1' },
+          { id: 'SEG-3', title: 'Confirmar presupuesto final', dueAt: new Date(now - 4*3600000).toISOString(), type: 'WhatsApp', owner: 'Lucía Méndez', status: 'Pendiente', contactId: 'CON-5', opportunityId: 'OPP-4' },
+          { id: 'SEG-4', title: 'Reunión de descubrimiento', dueAt: new Date(now + 3*86400000).toISOString(), type: 'Reunión', owner: 'Mateo Ruiz', status: 'Pendiente', contactId: 'CON-3', opportunityId: 'OPP-2' }
+        ],
+        conversations: [
+          { id: 'MSG-1', createdAt: new Date(now - 3*3600000).toISOString(), contactId: 'CON-4', opportunityId: 'OPP-3', channel: 'Llamada', direction: 'Saliente', summary: 'Julián aprobó la línea visual. Pidió ajustar el cronograma antes de confirmar.', owner: 'Taylor Gómez' },
+          { id: 'MSG-2', createdAt: new Date(now - 28*3600000).toISOString(), contactId: 'CON-2', opportunityId: 'OPP-1', channel: 'Email', direction: 'Entrante', summary: 'Compartieron alcance y catálogo actual. Preparar propuesta por dos fases.', owner: 'Lucía Méndez' },
+          { id: 'MSG-3', createdAt: new Date(now - 3*86400000).toISOString(), contactId: 'CON-3', opportunityId: 'OPP-2', channel: 'Reunión', direction: 'Nota', summary: 'Reunión inicial completada. El objetivo es aumentar reservas durante temporada baja.', owner: 'Mateo Ruiz' }
+        ],
+        quotes: [
+          { id: 'COT-1', quoteNumber: 'COT-2026-0001', contactId: 'CON-4', opportunityId: 'OPP-3', subtotal: 2450000, taxRate: 0, taxAmount: 0, total: 2450000, currency: 'ARS', status: 'Enviada', validUntil: dateInput(new Date(now + 12*86400000)), itemsJson: JSON.stringify([{ description: 'Diseño y desarrollo web', quantity: 1, price: 2450000, total: 2450000 }]), owner: 'Taylor Gómez', createdAt: new Date(now - 2*86400000).toISOString() },
+          { id: 'COT-2', quoteNumber: 'COT-2026-0002', contactId: 'CON-1', opportunityId: 'OPP-5', subtotal: 1280000, taxRate: 0, taxAmount: 0, total: 1280000, currency: 'ARS', status: 'Aceptada', validUntil: dateInput(new Date(now + 4*86400000)), itemsJson: JSON.stringify([{ description: 'Sistema de identidad', quantity: 1, price: 1280000, total: 1280000 }]), owner: 'Taylor Gómez', createdAt: new Date(now - 10*86400000).toISOString() }
+        ]
+      };
+    }
+
+    async function demoApi(action, payload) {
+      await new Promise(resolve => setTimeout(resolve, action === 'bootstrap' ? 160 : 260));
+      if (action === 'login') {
+        const saved = JSON.parse(localStorage.getItem('nexo_demo_data') || 'null') || demoSeed();
+        state._demoData = saved;
+        return { ok: true, token: 'demo-session', user: saved.user, expiresIn: 999999 };
+      }
+      if (action === 'bootstrap') {
+        state._demoData ||= JSON.parse(localStorage.getItem('nexo_demo_data') || 'null') || demoSeed();
+        return { ok: true, ...JSON.parse(JSON.stringify(state._demoData)) };
+      }
+      if (action === 'logout') return { ok: true };
+      const data = state._demoData ||= demoSeed();
+      const now = new Date().toISOString();
+      const id = prefix => `${prefix}-${crypto.randomUUID().slice(0,8).toUpperCase()}`;
+      const save = (collection, item, prefix) => {
+        const current = item.id && data[collection].find(x => x.id === item.id);
+        const next = { ...(current || {}), ...item, id: current?.id || id(prefix), createdAt: current?.createdAt || now, updatedAt: now };
+        const index = data[collection].findIndex(x => x.id === next.id);
+        if (index >= 0) data[collection][index] = next; else data[collection].push(next);
+        return next;
+      };
+      let item;
+      if (action === 'saveContact') item = save('contacts', payload.data, 'CON');
+      if (action === 'saveOpportunity') item = save('opportunities', { ...payload.data, lastActivity: payload.data.lastActivity || now }, 'OPP');
+      if (action === 'changeStage') {
+        item = data.opportunities.find(x => x.id === payload.id);
+        if (item) { item.stage = payload.stage; item.probability = {Nuevo:10,Contactado:25,Propuesta:50,'Negociación':75,Ganado:100,Perdido:0}[payload.stage]; item.lastActivity = now; item.updatedAt = now; }
+      }
+      if (action === 'saveFollowUp') item = save('followUps', { status: 'Pendiente', ...payload.data }, 'SEG');
+      if (action === 'completeFollowUp') { item = data.followUps.find(x => x.id === payload.id); if (item) { item.status = 'Completado'; item.completedAt = now; } }
+      if (action === 'saveConversation') item = save('conversations', { ...payload.data, owner: state.user.name }, 'MSG');
+      if (action === 'saveQuote') {
+        const items = payload.data.items || [];
+        const subtotal = items.reduce((sum,x) => sum + toNumber(x.quantity) * toNumber(x.price), 0);
+        const taxAmount = subtotal * toNumber(payload.data.taxRate) / 100;
+        item = save('quotes', { ...payload.data, quoteNumber: payload.data.id ? data.quotes.find(x => x.id === payload.data.id)?.quoteNumber : `COT-2026-${String(data.quotes.length + 1).padStart(4,'0')}`, subtotal, taxAmount, total: subtotal + taxAmount, itemsJson: JSON.stringify(items.map(x => ({...x,total:toNumber(x.quantity)*toNumber(x.price)}))), owner: state.user.name }, 'COT');
+      }
+      if (action === 'saveSeller') item = save('sellers', { ...payload.data, role: payload.data.role || 'seller' }, 'USR');
+      localStorage.setItem('nexo_demo_data', JSON.stringify(data));
+      return { ok: true, item };
+    }
+
+    async function init() {
+      installMetadata();
+      bindGlobalEvents();
+      el.demoButton.hidden = !DEMO_MODE;
+      if (DEMO_MODE) {
+        $('#loginEmail').value = 'demo@nexo.local';
+        $('#loginPassword').value = 'demostracion';
+      }
+      if (state.token && !DEMO_MODE) {
+        setLoading(true, 'Recuperando tu espacio…');
+        try { await loadData(); showApp(); }
+        catch (_) { sessionStorage.removeItem('nexo_token'); state.token = ''; }
+        finally { setLoading(false); }
+      }
+    }
+
+    init();
+  </script>
+</body>
+</html>
