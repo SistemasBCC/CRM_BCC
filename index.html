@@ -266,15 +266,15 @@
       flex-direction: column;
       padding: 24px 16px 16px;
       border-radius: var(--radius-xl);
-      color: white;
-      background: var(--ink);
+      color: var(--ink);
+      background: linear-gradient(160deg, #8fd8f7 0%, #4bb8ea 100%);
       box-shadow: var(--shadow);
       overflow: hidden;
     }
     .sidebar .brand { padding: 0 8px; }
     .sidebar-caption {
       margin: 30px 12px 10px;
-      color: #587a8c;
+      color: rgba(18,60,87,.6);
       font-size: 10px;
       font-weight: 800;
       text-transform: uppercase;
@@ -290,7 +290,7 @@
       border: 0;
       border-radius: 12px;
       padding: 10px 13px;
-      color: #a8c5d3;
+      color: rgba(18,60,87,.8);
       background: transparent;
       font-size: 12px;
       font-weight: 700;
@@ -298,49 +298,27 @@
       transition: color .18s, background .18s;
     }
     .nav-btn i { width: 18px; font-size: 16px; text-align: center; }
-    .nav-btn:hover { color: white; background: rgba(255,255,255,.055); }
-    .nav-btn.active { color: var(--ink); background: var(--lime); }
+    .nav-btn:hover { color: var(--ink); background: rgba(255,255,255,.4); }
+    .nav-btn.active { color: white; background: var(--ink); }
     .nav-badge {
       min-width: 20px;
       margin-left: auto;
       border-radius: 999px;
       padding: 3px 6px;
-      color: var(--ink);
-      background: #ffc7a4;
+      color: white;
+      background: var(--ink);
       font-size: 9px;
       text-align: center;
     }
-    .nav-btn.active .nav-badge { background: var(--ink); color: var(--lime); }
+    .nav-btn.active .nav-badge { background: white; color: var(--ink); }
     .sidebar-bottom { margin-top: auto; }
-    .install-card {
-      position: relative;
-      margin-bottom: 12px;
-      border-radius: 17px;
-      padding: 15px;
-      color: var(--ink);
-      background: var(--lime);
-      overflow: hidden;
-    }
-    .install-card::after {
-      content: "";
-      position: absolute;
-      width: 60px;
-      height: 60px;
-      right: -15px;
-      bottom: -20px;
-      border: 10px solid rgba(33,31,47,.12);
-      border-radius: 50%;
-    }
-    .install-card strong { display: block; position: relative; z-index: 1; font-size: 12px; }
-    .install-card span { display: block; position: relative; z-index: 1; margin-top: 4px; font-size: 9px; line-height: 1.45; }
-    .install-card button { position: relative; z-index: 1; margin-top: 10px; }
     .user-card {
       display: grid;
       grid-template-columns: 38px 1fr 28px;
       align-items: center;
       gap: 9px;
       padding: 10px 8px 0;
-      border-top: 1px solid rgba(255,255,255,.08);
+      border-top: 1px solid rgba(18,60,87,.15);
     }
     .avatar {
       width: 38px;
@@ -354,12 +332,12 @@
       font-size: 12px;
       font-weight: 900;
     }
-    .avatar.lime { background: var(--lime); }
+    .avatar.lime { color: white; background: var(--ink); }
     .user-card strong, .user-card small { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-    .user-card strong { color: white; font-size: 11px; }
-    .user-card small { margin-top: 2px; color: #6f96a8; font-size: 9px; }
-    .logout-btn { border: 0; color: #6f96a8; background: transparent; padding: 4px; }
-    .logout-btn:hover { color: white; }
+    .user-card strong { color: var(--ink); font-size: 11px; }
+    .user-card small { margin-top: 2px; color: rgba(18,60,87,.6); font-size: 9px; }
+    .logout-btn { border: 0; color: rgba(18,60,87,.6); background: transparent; padding: 4px; }
+    .logout-btn:hover { color: var(--ink); }
 
     .workspace {
       min-width: 0;
@@ -1247,8 +1225,6 @@
     .login-note { font-size: 12px; }
     .nav-btn { font-size: 14px; }
     .sidebar-caption { font-size: 11px; }
-    .install-card strong { font-size: 13px; }
-    .install-card span { font-size: 11px; }
     .user-card strong { font-size: 13px; }
     .user-card small { font-size: 11px; }
     .topbar-title strong { font-size: 17px; }
@@ -1328,7 +1304,6 @@
       .metric-foot { display: flex; font-size: 10px; }
     }
     @media (max-height: 700px) {
-      .install-card { display: none; }
       .sidebar-caption { margin-top: 18px; }
       .login-brand, .login-form-wrap { padding-top: 30px; padding-bottom: 30px; }
     }
@@ -1392,11 +1367,6 @@
         <button class="nav-btn" data-view="sellers"><i class="bi bi-bar-chart"></i><span>Vendedores</span></button>
       </nav>
       <div class="sidebar-bottom">
-        <div class="install-card">
-          <strong>Instalá BCC CRM</strong>
-          <span>Accedé como una app desde tu celular o computadora.</span>
-          <button class="btn btn-sm" id="installButton" type="button"><i class="bi bi-download"></i> Instalar</button>
-        </div>
         <div class="user-card">
           <span class="avatar lime" id="sidebarAvatar">NA</span>
           <div><strong id="sidebarUser">Usuario</strong><small id="sidebarRole">Vendedor</small></div>
@@ -2306,7 +2276,6 @@
         event.preventDefault();
         state.deferredInstall = event;
       });
-      $('#installButton').addEventListener('click', installApp);
     }
 
     async function installApp() {
